@@ -39,17 +39,7 @@ Les robots doivent aider les écureuils à stocker et protéger leurs noisettes 
    
 5. **À table !**  
    Les petits écureuils (PAMIs) doivent rejoindre les **garde-mangers** et « manger » les noisettes.
-##  Structure du répertoire
 
-Voici l'organisation principale du projet :
-
-* 📁 **[Firmware](./Firmware/)** : Contient le code embarqué pour les microcontrôleurs, incluant l'asservissement.
-* 📁 **[Hardware](./Hardware/)** : Regroupe les conceptions électroniques (PCB) et les modélisations mécaniques (3D).
-* 📁 **[Journal](./Journal/)** : Suivi de l'avancement du projet et logs de bord.
-* 📁 **[PAMI_Ninja](./PAMI_Ninja/)** : Contient tous ce qui est relatif au pami ninja  .
-* 📁 **[Software](./Software/)** : Applications de haut niveau, outils de contrôle ou interfaces utilisateur.
-* 📁 **[Strategie](./Strategie/)** : Documents et algorithmes définissant le comportement du robot pendant les matchs.
-* 📁 **[tableau de bord](./tableau%20de%20bord/)** : Outils de monitoring et suivi des indicateurs de l'équipe.
   
 
 
