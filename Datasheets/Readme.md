@@ -3,13 +3,13 @@
 Ce répertoire centralise toutes les fiches techniques (datasheets) des composants utilisés sur le robot Spip. **Consultation obligatoire** avant toute manipulation électronique ou modification du code bas niveau.
 
 ## 🧠 Microcontrôleur (Cerveau)
-- **STM32G431CBU6** : [Lien vers le PDF local](./micro/stm32g431.pdf)
+- **STM32G431CBU6** : [Lien vers le PDF local](./STM32G431CBU6_Datasheet.pdf)
   - *Points clés* : Tension 3.3V, 128KB Flash, Pins FT (5V tolerant) à vérifier sur le Pinout.
 
 ## ⚙️ Actionneurs (Moteurs & Servos)
 - **Moteurs DC + Encodeurs** : [Spécifications Moteurs](./actuators/moteurs_propulsion.pdf)
   - *Infos* : Rapport de réduction, résolution des encodeurs (ticks/tour).
-- **Dynamixel XL320** : [Manuel Utilisateur](./actuators/xl320_manual.pdf)
+- **Dynamixel XL320** : [Manuel Utilisateur](./XL-320.pdf)
   - *Infos* : Protocole Dynamixel 2.0, Couple 0.39 N.m, Tension 7.4V.
 
 ## 🛰️ Capteurs
