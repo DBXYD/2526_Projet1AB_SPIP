@@ -16,3 +16,7 @@ Ce dossier contient le projet STM32CubeIDE. Le code est structuré pour gérer l
 | **Ultrason (Echo)** | PA1 | GPIO Input / TIM |
 | **Debug SWD** | PA13 / PA14 | SWDIO / SWCLK |
 
+## 🛠️ Compilation
+- Utiliser **STM32CubeIDE**.
+- Générer le code via le fichier `.ioc` si vous modifiez le hardware.
+- Flasher via un **ST-Link V2/V3**.
