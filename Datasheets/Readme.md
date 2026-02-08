@@ -13,14 +13,12 @@ Ce répertoire centralise toutes les fiches techniques (datasheets) des composan
   - *Infos* : Protocole Dynamixel 2.0, Couple 0.39 N.m, Tension 7.4V.
 
 ## 🛰️ Capteurs
-- **Capteur Ultrason (HC-SR04)** : [Datasheet](./sensors/ultrason_hcsr04.pdf)
+- **Capteur Ultrason (HC-SR04)** : [Datasheet](./HC-SR04.pdf)
   - *Attention* : Sortie Echo en 5V (nécessite un pont diviseur pour le STM32).
-- **Capteur de Couleur** : [Datasheet](./sensors/color_sensor.pdf)
-  - *Com* : Protocole I2C (Adresse 0xXX).
 - **Capteurs de ligne (IR)** : [Datasheet](./sensors/ir_line_sensor.pdf)
 
 ## ⚡ Alimentation & Drivers
-- **Driver Moteur (Xl320)** : [Documentation](./power/driver_data.pdf)
+- **Driver Moteur (Xl320)** : [Documentation](./XL-320.pdf)
 - **Régulateur de tension** : [Step-down 5V/3.3V](./power/regulator.pdf)
 
 ---
