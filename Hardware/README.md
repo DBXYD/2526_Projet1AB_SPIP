@@ -1,52 +1,24 @@
-#  Répertoire *Hardware*
+# ⚙️ Hardware & Conception
 
-Ce répertoire regroupe l’ensemble des éléments matériels du projet, incluant les conceptions électroniques (PCB) et mécaniques (3D).  
-Il est organisé en deux sous-dossiers principaux : **PCB** et **3D**.
+Ce dossier contient tous les éléments physiques de Spip.
 
----
+## 🔌 Électronique
+- **Alimentation** : Batterie Lipo (7.4V pour le XL320, régulé 3.3V pour le STM32).
+- **Drivers** : Driver moteur DC (pont en H) et bus Dynamixel pour le XL320.
+- **Schémas** : Voir le fichier `schema_cablage.pdf` dans ce dossier.
 
-## Objectif du répertoire
+## 🔩 Mécanique
+- **Châssis** : Découpe laser ou impression 3D.
+- **Queue** : Pièce spécifique montée sur l'axe du XL320.
+- **Roues** : 2 roues motrices + 1 roue folle à l'arrière.
 
-Ce dossier centralise toutes les ressources matérielles du projet afin de faciliter :
-
-- la conception  
-- la fabrication  
-- l’assemblage  
-- l’évolution du robot  
-
-Il constitue la **référence principale** pour toute la partie *hardware* du projet.
-
----
-
-##  Structure du répertoire
-
-```
-Hardware/
-│
-├── PCB/
-│
-└── 3D/
-```
-
----
-
-##  PCB — Conceptions électroniques
-
-Le répertoire **PCB** contient l’ensemble des cartes électroniques du projet. Chaque carte possède son propre dossier dédié.
-
-### PCB disponibles
-
----
-
-## 3D — Modélisation mécanique
-
-Le répertoire **3D** contient les modèles 3D du robot, destinés à l’impression 3D et à la conception mécanique.
-
-### Modèles inclus
-
----
-
-
+## 📦 Liste de composants (BOM)
+- 1x STM32G431CBU6
+- 2x Moteurs à encodeurs
+- 1x Robotis Dynamixel XL320
+- 1x Capteur Ultrason HC-SR04 (ou équivalent)
+- 1x Capteur de couleur
+- 3x Capteurs de ligne (Infrarouge)
 
 
 
