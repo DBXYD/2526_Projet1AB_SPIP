@@ -18,7 +18,7 @@ Ce répertoire centralise toutes les fiches techniques (datasheets) des composan
 - **Capteurs de ligne (IR)** : [Datasheet](./sensors/ir_line_sensor.pdf)
 
 ## ⚡ Alimentation & Drivers
-- **Driver Moteur (Xl320)** : [Documentation](./XL-320.pdf)
+- **Driver Moteur (Xl320)** : [Documentation](./Driver_DATASHEET.pdf)
 - **Régulateur de tension** : [Step-down 5V/3.3V](./power/regulator.pdf)
 
 ---
