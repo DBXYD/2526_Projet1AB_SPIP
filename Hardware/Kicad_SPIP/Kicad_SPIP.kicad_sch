@@ -4010,6 +4010,10 @@
 		(uuid "e3810340-3535-42ed-b01a-26a214142358")
 	)
 	(no_connect
+		(at 45.72 76.2)
+		(uuid "11210937-e76d-46fc-b89d-54aa61c9a931")
+	)
+	(no_connect
 		(at 45.72 58.42)
 		(uuid "19c7257e-7d20-4568-8f11-ff4a79e1f570")
 	)
@@ -4082,6 +4086,10 @@
 		(uuid "95a278b0-f941-40f5-8a1d-46aa724f9a47")
 	)
 	(no_connect
+		(at 45.72 78.74)
+		(uuid "99d2d958-f91b-4ba7-be54-0f5ac26545c6")
+	)
+	(no_connect
 		(at 45.72 114.3)
 		(uuid "a48bf111-300b-439d-9130-94aaf945d4c9")
 	)
@@ -4096,6 +4104,10 @@
 	(no_connect
 		(at 45.72 73.66)
 		(uuid "c9cc8e07-d744-4a7d-8eae-7b0e217ef161")
+	)
+	(no_connect
+		(at 45.72 81.28)
+		(uuid "db5e6f66-5a4a-463a-b1d9-39a23bbb8667")
 	)
 	(no_connect
 		(at 45.72 116.84)
@@ -5617,7 +5629,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical"
 			(at 214.63 68.58 0)
 			(effects
 				(font
@@ -5832,7 +5844,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 180.34 34.29 0)
 			(effects
 				(font
@@ -6034,7 +6046,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical"
 			(at 262.89 100.33 0)
 			(effects
 				(font
@@ -6380,7 +6392,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 76.2 33.02 0)
 			(effects
 				(font
@@ -6515,7 +6527,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 55.88 33.02 0)
 			(effects
 				(font
@@ -6585,7 +6597,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 175.26 54.61 0)
 			(effects
 				(font
@@ -6851,7 +6863,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 63.5 33.02 0)
 			(effects
 				(font
@@ -6921,7 +6933,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical"
 			(at 261.62 34.29 0)
 			(effects
 				(font
@@ -7815,7 +7827,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "82kOhm"
+		(property "Value" "82.5kOhm"
 			(at 173.99 67.3099 0)
 			(effects
 				(font
@@ -7824,7 +7836,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 171.45 66.04 0)
 			(effects
 				(font
@@ -8027,7 +8039,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical"
 			(at 214.63 34.29 0)
 			(effects
 				(font
@@ -8107,7 +8119,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 34.29 66.04 0)
 			(effects
 				(font
@@ -8176,7 +8188,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 172.72 34.29 0)
 			(effects
 				(font
@@ -8380,7 +8392,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 68.58 33.02 0)
 			(effects
 				(font
@@ -8449,7 +8461,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 48.26 33.02 0)
 			(effects
 				(font
@@ -8782,7 +8794,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 261.62 68.58 0)
 			(effects
 				(font
@@ -8983,7 +8995,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 149.86 100.33 0)
 			(effects
 				(font
@@ -9056,7 +9068,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 179.07 44.45 0)
 			(effects
 				(font

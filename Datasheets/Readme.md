@@ -21,5 +21,7 @@ Ce répertoire centralise toutes les fiches techniques (datasheets) des composan
 - **Driver Moteur (Xl320)** : [Documentation](./Driver_DATASHEET.pdf)
 - **Régulateur de tension** : [Step-down 5V/3.3V](./power/regulator.pdf)
 
+## Résistance
+- **Résistance 82.5 kOhm (0805)** : [Datasheet](./Resistor 0805 82.5kOhm.pdf)
 ---
 > **Note aux développeurs** : Si vous ajoutez un composant sur le robot, merci d'ajouter sa datasheet ici et de mettre à jour ce fichier.
