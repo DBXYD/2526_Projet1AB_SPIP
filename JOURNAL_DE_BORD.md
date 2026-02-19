@@ -25,7 +25,7 @@ Ce fichier recense l'avancée du projet, les décisions prises et les objectifs 
     - Réalisation de la **schématique** et assignation des composants aux pins.
     - Début du routage du **PCB**.
 - **Développement & Logiciel** :
-    - Initialisation de la **liste des commandes** (avec l'aide de Hugo ).
+    - Initialisation de la **liste des commandes**.
 - **Gestion de projet (Hugo)** :
     - Mise en place du **planning** complet et de la répartition des tâches.
     - Organisation et structuration du répertoire **GitHub**.
