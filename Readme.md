@@ -49,13 +49,3 @@ Voici l'organisation principale du projet :
 * 📁 **[Tableau de bord](./Tableau%20de%20bord/)** : Outils de monitoring et suivi des indicateurs de l'équipe.
   
 
-
-
-## 🛠️ Spécifications Techniques
-* **Cerveau :** STM32G431CBU6 (Cortex-M4)
-* **Propulsion :** 2 moteurs avec encodeurs pour l'asservissement.
-* **Actionneur :** 1 Dynamixel XL320 pour la queue rotative.
-* **Capteurs :** 
-    * Ultrason (évitement d'obstacles).
-    * Couleur (Suiveur de ligne).
-* **Châssis :** Roue folle pour la stabilité.
