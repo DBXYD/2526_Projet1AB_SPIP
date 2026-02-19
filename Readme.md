@@ -1,5 +1,6 @@
 # 🐿️ Projet PAMI - Spip  (Coupe de France de Robotique)
 
+
 ##  Présentation de la Coupe
 La **Coupe de France de Robotique** (Eurobot Open France) est une compétition annuelle organisée par **Planète Sciences**.  
 Elle réunit des équipes étudiantes, associatives ou indépendantes, qui conçoivent des **robots autonomes** capables de relever des défis techniques en lien avec un thème annuel.
