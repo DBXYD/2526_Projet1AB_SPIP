@@ -30,16 +30,8 @@ Ce fichier recense l'avancée du projet, les décisions prises et les objectifs 
     - Mise en place du **planning** complet et de la répartition des tâches.
     - Organisation et structuration du répertoire **GitHub**.
 
-### 👥 Répartition de l'équipe
-| Membre | Rôle / Spécialité |
-| :--- | :--- |
-| **Hugo** | Gestion de projet, Planning & Organisation GitHub |
-| **Lucas** | Conception PCB & Électronique |
-| **Rayan** | Développement Firmware & Support Hardware |
-
 ---
 
 ## 🚀 Objectifs Séance Suivante (19/02)
 - **Lucas** : Finaliser complètement le routage et la vérification du PCB.
 - **Hugo** : Mettre à jour le journal de bord et superviser l'intégration sur Git.
-- **Rayan** : Commencer le codage des premières fonctions liées aux commandes définies.
