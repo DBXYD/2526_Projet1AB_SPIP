@@ -2,6 +2,7 @@
 
 Ce fichier recense l'avancée du projet, les décisions prises et les objectifs pour les prochaines séances.
 
+
 ---
 
 ## 📅 Séance du Jeudi 05 Février 2025
