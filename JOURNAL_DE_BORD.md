@@ -4,34 +4,42 @@ Ce fichier recense l'avancée du projet, les décisions prises et les objectifs 
 
 ---
 
-## 📅 Séance du Jeudi 05 Février 2026
+## 📅 Séance du Jeudi 05 Février 2025
 **Objectif :** Initialisation du projet et définition du hardware.
 
 ### ✅ Réalisations
-- **Définition des composants** : Validation de la liste matérielle (STM32G431, XL320, encodeurs, capteurs ultrason/couleur).
-- **Mise en place des outils** :
-    - Création du répertoire **GitHub** pour l'équipe.
-    - Installation de **Git** sur les postes de travail.
-    - Apprentissage des commandes de base (`git clone`, `add`, `commit`, `push`).
-- **Recherche documentaire** : Collecte de toutes les **datasheets** des composants dans le dossier `/datasheets`.
+- **Hardware** : Validation de la liste des composants (STM32G431, XL320, encodeurs, capteurs).
+- **Outils** : Création du répertoire GitHub et collecte des datasheets.
 
 ---
 
-## 📅 Séance du Jeudi 12 Février 2026
-**Objectif :** Conception du PCB et organisation structurelle.
+## 📅 Séance du Jeudi 12 Février 2025
+**Objectif :** Conception du PCB et organisation.
 
 ### ✅ Réalisations
-- **Conception Hardware (Lucas & Rayan)** :
-    - Réalisation de la **schématique** et assignation des composants aux pins.
-    - Début du routage du **PCB**.
-- **Développement & Logiciel** :
-    - Initialisation de la **liste des commandes**.
-- **Gestion de projet (Hugo)** :
-    - Mise en place du **planning** complet et de la répartition des tâches.
-    - Organisation et structuration du répertoire **GitHub**.
+- **Électronique** : Début de la schématique et assignation des pins.
+- **Gestion** : Mise en place du planning et structuration du répertoire GitHub.
 
 ---
 
-## 🚀 Objectifs Séance Suivante (19/02)
-- **Lucas** : Finaliser complètement le routage et la vérification du PCB.
-- **Hugo** : Mettre à jour le journal de bord et superviser l'intégration sur Git.
+## 📅 Séance du Jeudi 19 Février 2025
+**Objectif :** Finalisation de la conception électronique et inventaire.
+
+### ✅ Réalisations
+- **Conception PCB (KiCad)** : 
+    - Finalisation de la schématique et validation par l'encadrement (Mr. Papazoglou).
+    - Calcul des résistances de protection pour les LED.
+    - Routage du PCB en cours de finalisation.
+- **Décision Structurelle** : 
+    - Choix technique : le PCB sera une carte indépendante fixée à la coque par vissage pour plus de fiabilité.
+- **Logistique** : 
+    - Inventaire du stock et finalisation de la liste des composants à commander.
+- **Logiciel** : 
+    - Établissement de la liste des commandes de contrôle.
+
+---
+
+## 🚀 Objectifs Séance Suivante
+- **Production** : Lancer la fabrication du PCB après vérification finale.
+- **Mécanique** : Concevoir les points de fixation du PCB sur la coque du robot.
+- **Code** : Débuter l'implémentation de la communication avec les servomoteurs XL320.
