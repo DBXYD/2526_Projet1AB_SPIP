@@ -1,0 +1,18 @@
+/*
+ * asservissement.h
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#ifndef INC_ASSERVISSEMENT_H_
+#define INC_ASSERVISSEMENT_H_
+
+#include "hacher.h"
+
+#define KI 1.5f
+#define KP 0.2f // à affiner avec des test réel
+
+void asservissement(HACHER * h, int16_t consigne);
+
+#endif /* INC_ASSERVISSEMENT_H_ */
