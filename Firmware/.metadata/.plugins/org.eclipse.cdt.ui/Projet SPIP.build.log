@@ -1,0 +1,102 @@
+14:59:15 **** Build of configuration Debug for project Projet SPIP ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o"
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Startup/startup_stm32g431cbux.d" -MT"Core/Startup/startup_stm32g431cbux.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Startup/startup_stm32g431cbux.o" "../Core/Startup/startup_stm32g431cbux.s"
+arm-none-eabi-gcc "../Core/Src/asservissement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/asservissement.d" -MT"Core/Src/asservissement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asservissement.o"
+arm-none-eabi-gcc "../Core/Src/encoder.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/encoder.d" -MT"Core/Src/encoder.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/encoder.o"
+arm-none-eabi-gcc "../Core/Src/hacher.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/hacher.d" -MT"Core/Src/hacher.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/hacher.o"
+In file included from ../Core/Inc/hacher.h:11,
+                 from ../Core/Inc/asservissement.h:11,
+                 from ../Core/Src/asservissement.c:8:
+../Core/Inc/encoder.h:14:9: error: unknown type name 'TIM_HandleTypeDef'
+   14 |         TIM_HandleTypeDef * htim;
+      |         ^~~~~~~~~~~~~~~~~
+../Core/Inc/encoder.h:19:38: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   19 | void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int32_t compteur, int16_t derniere_valeur);
+      |                                      ^~~~~~~~~~~~~~~~~
+      |                                      EXTI_HandleTypeDef
+In file included from ../Core/Inc/hacher.h:12:
+../Core/Inc/motor.h:14:9: error: unknown type name 'TIM_HandleTypeDef'
+   14 |         TIM_HandleTypeDef * htim;
+      |         ^~~~~~~~~~~~~~~~~
+../Core/Inc/motor.h:22:32: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   22 | void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB);
+      |                                ^~~~~~~~~~~~~~~~~
+      |                                EXTI_HandleTypeDef
+../Core/Inc/hacher.h:19:33: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   19 | void hacher_init(MOTOR * motor, TIM_HandleTypeDef * htim_param_motor, uint32_t chA, uint32_t chB, float speed, ENCODER * encoder,
+      |                                 ^~~~~~~~~~~~~~~~~
+      |                                 EXTI_HandleTypeDef
+../Core/Inc/hacher.h:20:17: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   20 |                 TIM_HandleTypeDef * htim_param_encoder, int32_t compteur, int16_t derniere_valeur);
+      |                 ^~~~~~~~~~~~~~~~~
+      |                 EXTI_HandleTypeDef
+make: *** [Core/Src/subdir.mk:49: Core/Src/asservissement.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from ../Core/Src/encoder.c:8:
+../Core/Inc/encoder.h:14:9: error: unknown type name 'TIM_HandleTypeDef'
+   14 |         TIM_HandleTypeDef * htim;
+      |         ^~~~~~~~~~~~~~~~~
+../Core/Inc/encoder.h:19:38: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   19 | void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int32_t compteur, int16_t derniere_valeur);
+      |                                      ^~~~~~~~~~~~~~~~~
+      |                                      EXTI_HandleTypeDef
+../Core/Src/encoder.c:10:38: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   10 | void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int32_t compteur, int16_t derniere_valeur){
+      |                                      ^~~~~~~~~~~~~~~~~
+      |                                      EXTI_HandleTypeDef
+../Core/Src/encoder.c: In function 'encoder_update':
+../Core/Src/encoder.c:19:45: error: request for member 'Instance' in something not a structure or union
+   19 |         uint16_t valeur_actuel=encoder->htim->Instance->CNT;
+      |                                             ^~
+make: *** [Core/Src/subdir.mk:49: Core/Src/encoder.o] Error 1
+In file included from ../Core/Inc/hacher.h:11,
+                 from ../Core/Src/hacher.c:7:
+../Core/Inc/encoder.h:14:9: error: unknown type name 'TIM_HandleTypeDef'
+   14 |         TIM_HandleTypeDef * htim;
+      |         ^~~~~~~~~~~~~~~~~
+../Core/Inc/encoder.h:19:38: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   19 | void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int32_t compteur, int16_t derniere_valeur);
+      |                                      ^~~~~~~~~~~~~~~~~
+      |                                      EXTI_HandleTypeDef
+In file included from ../Core/Inc/hacher.h:12:
+../Core/Inc/motor.h:14:9: error: unknown type name 'TIM_HandleTypeDef'
+   14 |         TIM_HandleTypeDef * htim;
+      |         ^~~~~~~~~~~~~~~~~
+../Core/Inc/motor.h:22:32: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   22 | void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB);
+      |                                ^~~~~~~~~~~~~~~~~
+      |                                EXTI_HandleTypeDef
+../Core/Inc/hacher.h:19:33: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   19 | void hacher_init(MOTOR * motor, TIM_HandleTypeDef * htim_param_motor, uint32_t chA, uint32_t chB, float speed, ENCODER * encoder,
+      |                                 ^~~~~~~~~~~~~~~~~
+      |                                 EXTI_HandleTypeDef
+../Core/Inc/hacher.h:20:17: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   20 |                 TIM_HandleTypeDef * htim_param_encoder, int32_t compteur, int16_t derniere_valeur);
+      |                 ^~~~~~~~~~~~~~~~~
+      |                 EXTI_HandleTypeDef
+../Core/Src/hacher.c:9:33: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+    9 | void hacher_init(MOTOR * motor, TIM_HandleTypeDef * htim_param_motor, uint32_t chA, uint32_t chB, float speed, ENCODER * encoder,
+      |                                 ^~~~~~~~~~~~~~~~~
+      |                                 EXTI_HandleTypeDef
+../Core/Src/hacher.c:10:17: error: unknown type name 'TIM_HandleTypeDef'; did you mean 'EXTI_HandleTypeDef'?
+   10 |                 TIM_HandleTypeDef * htim_param_encoder, int32_t compteur, int16_t derniere_valeur){
+      |                 ^~~~~~~~~~~~~~~~~
+      |                 EXTI_HandleTypeDef
+make: *** [Core/Src/subdir.mk:49: Core/Src/hacher.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+14:59:17 Build Failed. 22 errors, 0 warnings. (took 1s.871ms)
+

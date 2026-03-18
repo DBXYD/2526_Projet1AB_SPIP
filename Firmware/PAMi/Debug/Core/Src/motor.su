@@ -1,0 +1,2 @@
+../Core/Src/motor.c:10:6:motor_init	24	static
+../Core/Src/motor.c:22:6:motor_apply	24	static

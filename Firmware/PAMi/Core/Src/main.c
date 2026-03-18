@@ -24,7 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "mouvement.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +45,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+HACHER hacher_g;
+HACHER hacher_d;
+MOUVEMENTCONTROL mvt;
 
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
+extern TIM_HandleTypeDef htim6;
+
+int etape_scenario = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -56,7 +66,10 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int __io_putchar(int ch){
+	HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+	return ch;
+}
 /* USER CODE END 0 */
 
 /**
@@ -93,7 +106,18 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+
+  hacher_init(&(hacher_g.motor), &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, 0,
+               &(hacher_g.encoder), &htim3, 0, 0);
+
+  hacher_init(&(hacher_d.motor), &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4, 0,
+               &(hacher_d.encoder), &htim4, 0, 0);
+  HAL_TIM_Base_Start_IT(&htim6);
+
+  int32_t count =0;
+  int32_t last_count =0;
 
   /* USER CODE END 2 */
 
@@ -157,27 +181,6 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
-
-/**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM6 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  /* USER CODE BEGIN Callback 0 */
-
-  /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM6) {
-    HAL_IncTick();
-  }
-  /* USER CODE BEGIN Callback 1 */
-
-  /* USER CODE END Callback 1 */
-}
 
 /**
   * @brief  This function is executed in case of error occurrence.
