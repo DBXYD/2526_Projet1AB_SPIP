@@ -1,2 +1,2 @@
 ../Core/Src/motor.c:10:6:motor_init	1
-../Core/Src/motor.c:22:6:motor_apply	24
+../Core/Src/motor.c:26:6:motor_set	24

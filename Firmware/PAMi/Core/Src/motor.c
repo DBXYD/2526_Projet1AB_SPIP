@@ -7,34 +7,38 @@
 
 #include "motor.h"
 
-void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB){
+void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB, float R,int sens){
 	motor->htim=htim_param;
 	motor->channel_A=chA;
 	motor->channel_B=chB;
 	motor->speed=0;
+	motor ->rayon=R;
 	motor->erreur_accumulee = 0;
-    motor->ARR = htim_param->Instance->ARR;
-    motor_apply(motor);
+    motor->ARR = 4249;
+    motor->sens = sens;
+
     HAL_TIM_PWM_Start(motor->htim, motor->channel_A);
 	HAL_TIM_PWM_Start(motor->htim, motor->channel_B);
+
+    motor_set(motor);
 }
 
-void motor_apply(MOTOR * motor){
-	float rapport_cyclique = motor->speed;
+void motor_set(MOTOR * motor){
+	float v = motor->speed * (float)motor->sens;
 
-	if (rapport_cyclique >= 0){
-		if (rapport_cyclique  > motor->ARR){
-			rapport_cyclique  = motor->ARR;
+	if (v >= 0){
+		if (v  > motor->ARR){
+			v  = motor->ARR;
 		}
-		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_A, (uint32_t)rapport_cyclique );
+		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_A, (uint32_t)v );
 		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_B, 0);
 	}
 	else{
-		if (rapport_cyclique < -motor->ARR){
-			rapport_cyclique = -motor->ARR;
+		if (v < -motor->ARR){
+			v = -motor->ARR;
 		}
 		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_A, 0);
-		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_B, (uint32_t)(-rapport_cyclique ));
+		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_B, (uint32_t)(-v));
 	}
 }
 

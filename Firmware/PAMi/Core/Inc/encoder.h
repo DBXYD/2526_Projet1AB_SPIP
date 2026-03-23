@@ -9,14 +9,18 @@
 #define INC_ENCODER_H_
 
 #include "main.h"
+#include "motor.h"
 
 typedef struct encoder{
 	TIM_HandleTypeDef * htim;
 	int32_t compteur;
 	int16_t derniere_valeur;
+	float tick_tour;
+	int sens;
+
 }ENCODER;
 
-void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int32_t compteur, int16_t derniere_valeur);
-int16_t encoder_update(ENCODER * encoder);
+void encoder_init(ENCODER * encoder,MOTOR * motor, TIM_HandleTypeDef * htim_param, float tick_par_tour, float cnt_par_tick);
+void encoder_update(ENCODER * encoder);
 
 #endif /* INC_ENCODER_H_ */

@@ -1,0 +1,70 @@
+/*
+ * mouvement.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "mouvement.h"
+
+void move_init(MOUVEMENTCONTROL * mvt){
+	mvt->etat=STOP;
+	mvt->distance_ticks_cible=0;
+	mvt->distance_ticks_d_parcourue=0;
+	mvt->distance_ticks_g_parcourue=0;
+	mvt->vitesse_ticks_ms=0;
+}
+
+
+void avancer(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float distance, float vitesse){
+    float perimetre = 2.0f * M_PI * motor_g->rayon;  // le /1000.0 f c'est pour des mm
+    float ticks_par_mm = encoder_g->tick_tour / perimetre;
+    mvt->distance_ticks_cible = (int32_t)(distance* ticks_par_mm);// le /1000.0 f c'est pour des ms
+    mvt->vitesse_ticks_ms = (vitesse* ticks_par_mm) / 1000.0f;
+	mvt->distance_ticks_d_parcourue=0;
+	mvt->distance_ticks_g_parcourue=0;
+    mvt->etat = AVANCER;
+}
+
+void tourner(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float angle_deg, float vitesse){
+    float perimetre_roue = 2.0f * M_PI * motor_g->rayon;
+    float ticks_par_mm = encoder_g->tick_tour / perimetre_roue;
+    float angle_rad = fabsf(angle_deg) * M_PI / 180.0f;
+	float arc_mm = angle_rad * (DISTANCE_ROUE / 2.0f);
+
+    mvt->distance_ticks_cible = (int32_t)(arc_mm * ticks_par_mm);
+    mvt->vitesse_ticks_ms = (vitesse * ticks_par_mm) / 1000.0f;
+	mvt->angle_positif = (angle_deg > 0);
+	mvt->distance_ticks_d_parcourue=0;
+	mvt->distance_ticks_g_parcourue=0;
+
+    mvt->etat = TOURNER;
+}
+
+void mouvement_update(MOUVEMENTCONTROL *mvt, ASSERVISSEMENT *asservissement, ENCODER *encoder_g, ENCODER *eencoder_d) {
+    if (mvt->etat == STOP) {
+    	asservissement_set_vitesse(asservissement, 0, 0);
+        return;
+    }
+    mvt->distance_ticks_g_parcourue = abs(encoder_g->compteur);
+    mvt->distance_ticks_d_parcourue = abs(encoder_d->compteur);
+
+    if (mvt->distance_ticks_g_parcourue >= mvt->distance_ticks_cible &&
+        mvt->distance_ticks_d_parcourue >= mvt->distance_ticks_cible) {
+    	mvt->etat = STOP;
+        return;
+    }
+
+    if (mvt->etat == AVANCER) {
+        asservissement_set_vitesse(asservissement,mvt->vitesse_ticks_ms, mvt->vitesse_ticks_ms);
+    }
+
+    if (mvt->etat == TOURNER) {
+        if (mvt->angle_positif) {
+            asservissement_set_vitesse(asservissement,-mvt->vitesse_ticks_ms, mvt->vitesse_ticks_ms);
+        }
+        else {
+            asservissement_set_vitesse(asservissement,mvt->vitesse_ticks_ms, -mvt->vitesse_ticks_ms);
+        }
+    }
+}

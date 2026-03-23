@@ -7,64 +7,64 @@
 
 #include "mouvement.h"
 
-extern HACHER hacher_d;
-extern HACHER hacher_g;
-
-extern MOUVEMENTCONTROL mvt;
-
-void stop() {
-    mvt.etat =STOP;
-    hacher_d.motor.speed = 0;
-    hacher_g.motor.speed = 0;
-    motor_apply(&(hacher_d.motor));
-    motor_apply(&(hacher_g.motor));
+void move_init(MOUVEMENTCONTROL * mvt){
+	mvt->etat=STOP;
+	mvt->distance_ticks_cible=0;
+	mvt->distance_ticks_d_parcourue=0;
+	mvt->distance_ticks_g_parcourue=0;
+	mvt->vitesse_ticks=0;
 }
 
-void avancer(float distance, int16_t vitesse) {
-    float perimetre = 2.0f * M_PI * RAYON_ROUE;
-    mvt.distance_ticks = (int32_t)((distance / perimetre) * TICKS_PAR_TOUR);
-    mvt.vitesse = vitesse;
-    hacher_d.encoder.compteur = 0;
-    hacher_g.encoder.compteur = 0;
-    mvt.etat = AVANCER;
+
+void avancer(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float distance, float vitesse){
+    float perimetre = 2.0f * M_PI * motor_g->rayon;  // le /1000.0 f c'est pour des mm
+    float ticks_par_mm = encoder_g->tick_tour / perimetre;
+    mvt->distance_ticks_cible = (int32_t)(distance* ticks_par_mm);// le /1000.0 f c'est pour des ms
+    mvt->vitesse_ticks = (vitesse* ticks_par_mm) / 1000.0f;
+	mvt->distance_ticks_d_parcourue=0;
+	mvt->distance_ticks_g_parcourue=0;
+    mvt->etat = AVANCER;
 }
 
-void tourner(float angle_deg, int16_t vitesse) {
-    float arc = (angle_deg * M_PI * DISTANCE_ROUE) / 360.0f;
-    float perimetre = 2.0f * M_PI * RAYON_ROUE;
+void tourner(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float angle_deg, float vitesse){
+    float perimetre_roue = 2.0f * M_PI * motor_g->rayon;
+    float ticks_par_mm = encoder_g->tick_tour / perimetre_roue;
+    float angle_rad = fabsf(angle_deg) * M_PI / 180.0f;
+	float arc_mm = angle_rad * (DISTANCE_ROUE / 2.0f);
 
-    mvt.distance_ticks = (int32_t)((arc / perimetre) * TICKS_PAR_TOUR);
-    mvt.vitesse = vitesse;
+    mvt->distance_ticks_cible = (int32_t)(arc_mm * ticks_par_mm);
+    mvt->vitesse_ticks = (vitesse * ticks_par_mm) / 1000.0f;
+	mvt->angle_positif = (angle_deg > 0);
+	mvt->distance_ticks_d_parcourue=0;
+	mvt->distance_ticks_g_parcourue=0;
 
-    hacher_d.encoder.compteur = 0;
-    hacher_g.encoder.compteur = 0;
-
-    mvt.etat = TOURNER;
+    mvt->etat = TOURNER;
 }
 
-void mouvement_update_task() {
-    if (mvt.etat == STOP){
-    	return;
+void mouvement_update(MOUVEMENTCONTROL *mvt, ASSERVISSEMENT *asservissement, ENCODER *encoder_g, ENCODER *encoder_d) {
+    if (mvt->etat == STOP) {
+    	asservissement_set_vitesse(asservissement, 0, 0);
+        return;
     }
+    mvt->distance_ticks_g_parcourue = abs(encoder_g->compteur);
+    mvt->distance_ticks_d_parcourue = abs(encoder_d->compteur);
 
-    int32_t progression_d = abs(hacher_d.encoder.compteur);
-    int32_t progression_g = abs(hacher_g.encoder.compteur);
-
-    if ((progression_d >= abs(mvt.distance_ticks)) && (progression_g >= abs(mvt.distance_ticks))) {
-        stop();
+    if (mvt->distance_ticks_g_parcourue >= mvt->distance_ticks_cible &&
+        mvt->distance_ticks_d_parcourue >= mvt->distance_ticks_cible) {
+    	mvt->etat = STOP;
         return;
     }
 
-    if (mvt.etat == AVANCER) {
-		int32_t erreur_synchro = hacher_g.encoder.compteur - hacher_d.encoder.compteur;
-		float K_synchro = 0.5f;
-		int16_t correction = (int16_t)(erreur_synchro * K_synchro);
+    if (mvt->etat == AVANCER) {
+        asservissement_set_vitesse(asservissement,mvt->vitesse_ticks, mvt->vitesse_ticks);
+    }
 
-		asservissement(&hacher_g, mvt.vitesse - correction);
-		asservissement(&hacher_d, mvt.vitesse + correction);
-	}
-	else if (mvt.etat == TOURNER) {
-		asservissement(&hacher_g, mvt.vitesse);
-		asservissement(&hacher_d, -mvt.vitesse);
-	}
+    if (mvt->etat == TOURNER) {
+        if (mvt->angle_positif) {
+            asservissement_set_vitesse(asservissement,-mvt->vitesse_ticks, mvt->vitesse_ticks);
+        }
+        else {
+            asservissement_set_vitesse(asservissement,mvt->vitesse_ticks, -mvt->vitesse_ticks);
+        }
+    }
 }

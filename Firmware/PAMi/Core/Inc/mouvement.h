@@ -12,30 +12,25 @@
 #include "asservissement.h"
 #include <math.h>
 #include <stdlib.h>
-
-#define TICKS_PAR_TOUR 718.0f
-#define RAYON_ROUE 1.5f
-#define DISTANCE_ROUE 8.7f
+#include <stdbool.h>
 
 
-typedef enum {
-    STOP,
-    AVANCER,
-    TOURNER
-} ETAT;
+#define DISTANCE_ROUE 87.0f
 
+typedef enum {STOP,AVANCER,TOURNER} ETAT;
 
-typedef struct {
+typedef struct mouvement{
     ETAT etat;
-    int32_t distance_ticks;
-    int16_t vitesse;
+    int32_t distance_ticks_cible;
+    int32_t distance_ticks_g_parcourue;
+    int32_t distance_ticks_d_parcourue;
+    float vitesse_ticks;
+    bool angle_positif;
 } MOUVEMENTCONTROL;
 
-
-void avancer(float distance, int16_t vitesse);
-void tourner(float angle_deg, int16_t vitesse);
-void stop();
-
-void mouvement_update_task();
+void move_init(MOUVEMENTCONTROL * mvt);
+void avancer(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float distance, float vitesse);
+void tourner(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float angle_deg, float vitesse);
+void mouvement_update(MOUVEMENTCONTROL *mvt, ASSERVISSEMENT *asservissement, ENCODER *encoder_g, ENCODER *eencoder_d);
 
 #endif

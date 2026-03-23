@@ -1,0 +1,16 @@
+/*
+ * hacher.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+#include "hacher.h"
+
+void hacher_init(COUPLE * couple, MOTOR * motor, ENCODER * encoder){
+	couple.motor=motor;
+	couple.encoder=encoder;
+
+
+}
+
+

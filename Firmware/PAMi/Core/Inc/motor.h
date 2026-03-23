@@ -12,14 +12,17 @@
 
 typedef struct motor{
 	TIM_HandleTypeDef * htim;
-	uint32_t channel_A;
-	uint32_t channel_B;
+	uint32_t channel_A;  // PWM Forward
+	uint32_t channel_B;	 // PWM Reverse
 	float speed;
+	float rayon;
 	float erreur_accumulee;
 	uint32_t ARR;
+	int sens; // 1 ou -1
 }MOTOR;
 
-void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB);
-void motor_apply(MOTOR * motor);
+void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB, float R,int sens);
+void motor_set(MOTOR * motor);
+
 
 #endif /* INC_MOTOR_H_ */

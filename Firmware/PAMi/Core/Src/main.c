@@ -34,7 +34,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define TICKS_PAR_TOUR 718.0f
+#define RAYON_ROUE 15.0f
+#define KP 250.0f
+#define KI 15.0f
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,8 +48,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-HACHER hacher_g;
-HACHER hacher_d;
+
+MOTOR motor_g, motor_d;
+ENCODER encoder_g, encoder_d;
+ASSERVISSEMENT asservissement;
 MOUVEMENTCONTROL mvt;
 
 extern TIM_HandleTypeDef htim1;
@@ -62,6 +67,9 @@ int etape_scenario = 0;
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
+
+
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -69,6 +77,16 @@ void SystemClock_Config(void);
 int __io_putchar(int ch){
 	HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
 	return ch;
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(htim->Instance == TIM6){
+        encoder_update(&encoder_g);
+        encoder_update(&encoder_d);
+        asservissement_update(&asservissement, &motor_g, &motor_d, &encoder_g, &encoder_d);
+        mouvement_update(&mvt, &asservissement, &encoder_g, &encoder_d);
+	}
+
 }
 /* USER CODE END 0 */
 
@@ -109,22 +127,29 @@ int main(void)
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 
-  hacher_init(&(hacher_g.motor), &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, 0,
-               &(hacher_g.encoder), &htim3, 0, 0);
+  motor_init(&motor_g, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, RAYON_ROUE,1);
+  motor_init(&motor_d, &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4, RAYON_ROUE,-1);
+  encoder_init(&encoder_g,&motor_g, &htim3, TICKS_PAR_TOUR, 1);
+  encoder_init(&encoder_d,&motor_d, &htim4, TICKS_PAR_TOUR, -1);
 
-  hacher_init(&(hacher_d.motor), &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4, 0,
-               &(hacher_d.encoder), &htim4, 0, 0);
+  move_init(&mvt);
+  asservissement_init(&asservissement, KP, KI);
+
   HAL_TIM_Base_Start_IT(&htim6);
-
-  int32_t count =0;
-  int32_t last_count =0;
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_Delay(1000);
+  avancer(&mvt, &motor_g, &encoder_g, 100.0f, 200.0f);
+  HAL_Delay(1000);
+  avancer(&mvt, &motor_g, &encoder_g, 100.0f, 200.0f);
+  HAL_Delay(1000);
+  avancer(&mvt, &motor_g, &encoder_g, 100.0f, 200.0f);
   while (1)
   {
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

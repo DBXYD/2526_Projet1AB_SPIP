@@ -1,1 +1,3 @@
-../Core/Src/asservissement.c:13:6:asservissement	3
+../Core/Src/asservissement.c:12:6:asservissement_init	1
+../Core/Src/asservissement.c:18:6:asservissement_set_vitesse	1
+../Core/Src/asservissement.c:23:6:asservissement_update	5

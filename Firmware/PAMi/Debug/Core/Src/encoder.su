@@ -1,2 +1,2 @@
-../Core/Src/encoder.c:10:6:encoder_init	24	static
-../Core/Src/encoder.c:18:9:encoder_update	24	static
+../Core/Src/encoder.c:10:6:encoder_init	32	static
+../Core/Src/encoder.c:22:6:encoder_update	24	static

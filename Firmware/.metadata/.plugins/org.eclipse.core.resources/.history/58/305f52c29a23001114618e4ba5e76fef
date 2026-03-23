@@ -1,0 +1,95 @@
+/*
+ * asservissement.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "asservissement.h"
+
+MOTOR * motor_d;
+MOTOR * motor_g;
+ENCODER * encoder_d;
+ENCODER * encoder_g;
+ASSERVISSEMENT asservissement;
+
+
+void asservissement_init(float Kp,float Ki){
+	asservissement.consigne_vitesse_g=0;
+	asservissement.consigne_vitesse_d=0;
+	asservissement.Kp=Kp;
+	asservissement.Ki=Ki;
+}
+void asservissement_set_vitesse(float speed_g, float speed_d) {
+	asservissement.consigne_vitesse_g = speed_g;
+	asservissement.consigne_vitesse_d = speed_d;
+}
+
+void asservissement_update(void) {
+	// 1. Mise à jour des encodeurs et récupération du delta
+	encoder_update(encoder_g);
+	encoder_update(encoder_d);
+
+	// On récupère le nombre de ticks parcourus depuis 40ms
+	int16_t mesure_g = (int16_t)encoder_g->compteur;
+	int16_t mesure_d = (int16_t)encoder_d->compteur;
+
+	// Réinitialisation du compteur à 0 pour la prochaine période (ta demande)
+	encoder_g->compteur = 0;
+	encoder_d->compteur = 0;
+
+	// 2. Calcul de l'erreur
+	float erreur_g = asservissement.consigne_vitesse_g - (float)mesure_g;
+	float erreur_d = asservissement.consigne_vitesse_d - (float)mesure_d;
+
+	// 3. Accumulation de l'erreur (Intégrale)
+	motor_g->erreur_accumulee += erreur_g;
+	motor_d->erreur_accumulee += erreur_d;
+
+	// 4. Calcul de la commande PID
+	motor_g->speed = (KP * erreur_g) + (KI * motor_g.erreur_accumulee);
+	motor_d->speed = (KP * erreur_d) + (KI * motor_d.erreur_accumulee);
+
+	// 5. Envoi aux moteurs
+	CRR_security(motor_g);
+	CRR_security(motor_d);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+void asservissement(COUPLE * hacher, int16_t consigne){
+	encoder_update(&(hacher->encoder));
+	int16_t vitesse_reelle=hacher->encoder->;
+	float erreur =(float) (consigne - vitesse_reelle);
+	hacher->motor.erreur_accumulee += erreur;
+	float ARR=(float) hacher->motor.ARR;
+
+	if (hacher->motor.erreur_accumulee > ARR ) {
+		hacher->motor.erreur_accumulee = ARR;
+	}
+	if (hacher->motor.erreur_accumulee < -ARR) {
+		hacher->motor.erreur_accumulee = -ARR;
+	}
+
+	float commande = (Kp * erreur) + (Ki * hacher->motor.erreur_accumulee);
+
+	hacher->motor.speed = commande;
+	CRR_security(&(hacher->motor));
+}
+µ/

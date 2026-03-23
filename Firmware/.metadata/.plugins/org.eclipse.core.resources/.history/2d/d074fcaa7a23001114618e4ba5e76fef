@@ -1,0 +1,31 @@
+/*
+ * asservissement.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "asservissement.h"
+
+float Ki=KI;
+float Kp=KP;
+
+void asservissement(HACHER * hacher, int16_t consigne){
+	encoder_update(&(hacher->encoder));
+	int16_t vitesse_reelle=hacher->encoder->;
+	float erreur =(float) (consigne - vitesse_reelle);
+	hacher->motor.erreur_accumulee += erreur;
+	float ARR=(float) hacher->motor.ARR;
+
+	if (hacher->motor.erreur_accumulee > ARR ) {
+		hacher->motor.erreur_accumulee = ARR;
+	}
+	if (hacher->motor.erreur_accumulee < -ARR) {
+		hacher->motor.erreur_accumulee = -ARR;
+	}
+
+	float commande = (Kp * erreur) + (Ki * hacher->motor.erreur_accumulee);
+
+	hacher->motor.speed = commande;
+	motor_apply(&(hacher->motor));
+}
