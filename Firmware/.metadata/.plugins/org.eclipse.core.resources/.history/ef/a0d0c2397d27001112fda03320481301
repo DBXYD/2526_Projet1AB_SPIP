@@ -1,0 +1,29 @@
+/*
+ * encoder.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "encoder.h"
+
+void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, float tick_par_tour){
+	encoder->htim =htim_param;
+	encoder->compteur=0;
+	encoder->last_counter=0;
+	encoder->tick_tour= tick_par_tour;
+	encoder->sens=motor->sens;
+
+	HAL_TIM_Encoder_Start(htim_param, TIM_CHANNEL_ALL);
+	encoder->htim->Instance->CNT=0;
+}
+
+
+void encoder_update(ENCODER * encoder){
+	uint16_t current_val = e->htim->Instance->CNT;
+	e->delta_ticks = (int16_t)(current_val - e->last_counter) * e->sens;
+	e->last_counter = current_val;
+	encoder->last_counter=valeur_actuel;
+}
+
+

@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "mouvement.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,10 +35,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TICKS_PAR_TOUR 718.0f
-#define RAYON_ROUE 15.0f
-#define KP 250.0f
-#define KI 15.0f
+#define TICKS_PAR_TOUR 1430
+#define RAYON_ROUE 1.5f
+#define COUNT_PAR_TICK 4
+#define KP 100.0f
+#define KI 0.0f
+#define DISTANCE_ROUE 8.7f
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,8 +54,8 @@
 
 MOTOR motor_g, motor_d;
 ENCODER encoder_g, encoder_d;
-ASSERVISSEMENT asservissement;
-MOUVEMENTCONTROL mvt;
+ASSERVISSEMENT asser_d,asser_g;
+MVTCTRL mvt;
 
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
@@ -60,7 +63,7 @@ extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim6;
 
-int etape_scenario = 0;
+int v=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -83,8 +86,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(htim->Instance == TIM6){
         encoder_update(&encoder_g);
         encoder_update(&encoder_d);
-        asservissement_update(&asservissement, &motor_g, &motor_d, &encoder_g, &encoder_d);
-        mouvement_update(&mvt, &asservissement, &encoder_g, &encoder_d);
+        asser_update(&asser_g,&motor_g, &encoder_g);
+        asser_update(&asser_d,&motor_d, &encoder_d);
+        mouvement_update(&mvt, &asser_g,&asser_d, &encoder_g, &encoder_d);
+        if(v==100){
+        	printf("Mouvement Reset:\r\n");
+        	printf(" Target Count: %ld\r\n", (long)mvt.d_target_cnt);
+			printf(" Ticks D Actual: %ld\r\n", (long)mvt.d_ticks_d_actual);
+			printf(" Ticks G Actual: %ld\r\n", (long)mvt.d_ticks_g_actual);
+			printf(" Speed Count: %ld\r\n", (long)mvt.speed_cnt);
+			v=0;
+        }
+        v++;
 	}
 
 }
@@ -127,28 +140,26 @@ int main(void)
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 
-  motor_init(&motor_g, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, RAYON_ROUE,1);
-  motor_init(&motor_d, &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4, RAYON_ROUE,-1);
-  encoder_init(&encoder_g,&motor_g, &htim3, TICKS_PAR_TOUR, 1);
-  encoder_init(&encoder_d,&motor_d, &htim4, TICKS_PAR_TOUR, -1);
-
-  move_init(&mvt);
-  asservissement_init(&asservissement, KP, KI);
+  motor_init(&motor_g, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2,4142);
+  motor_init(&motor_d, &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4,4142);
+  encoder_init(&encoder_g, &htim3, TICKS_PAR_TOUR,COUNT_PAR_TICK);
+  encoder_init(&encoder_d, &htim4, TICKS_PAR_TOUR,COUNT_PAR_TICK);
+  move_init(&mvt,DISTANCE_ROUE,RAYON_ROUE);
+  asser_init(&asser_d, KP, KI);
+  asser_init(&asser_g, KP, KI);
 
   HAL_TIM_Base_Start_IT(&htim6);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_Delay(1000);
-  avancer(&mvt, &motor_g, &encoder_g, 100.0f, 200.0f);
-  HAL_Delay(1000);
-  avancer(&mvt, &motor_g, &encoder_g, 100.0f, 200.0f);
-  HAL_Delay(1000);
-  avancer(&mvt, &motor_g, &encoder_g, 100.0f, 200.0f);
-  while (1)
-  {
+
+HAL_Delay(2000);
+avancer(&mvt, &motor_g, &encoder_g, 10.0f, 5.0f);
+HAL_Delay(2000);
+avancer(&mvt, &motor_g, &encoder_g, 10.0f, 5.0f);
+while(1){
+
 
     /* USER CODE END WHILE */
 

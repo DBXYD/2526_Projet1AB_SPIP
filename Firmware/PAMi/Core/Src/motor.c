@@ -7,38 +7,35 @@
 
 #include "motor.h"
 
-void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB, float R,int sens){
+void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB,uint32_t speed_max){
 	motor->htim=htim_param;
-	motor->channel_A=chA;
-	motor->channel_B=chB;
-	motor->speed=0;
-	motor ->rayon=R;
-	motor->erreur_accumulee = 0;
-    motor->ARR = 4249;
-    motor->sens = sens;
+	motor->ch_Forward=chA;
+	motor->ch_Reverse=chB;
+	motor->speed_final=0;
+	motor->speed_max=speed_max;
 
-    HAL_TIM_PWM_Start(motor->htim, motor->channel_A);
-	HAL_TIM_PWM_Start(motor->htim, motor->channel_B);
+    HAL_TIM_PWM_Start(motor->htim, motor->ch_Forward);
+	HAL_TIM_PWM_Start(motor->htim, motor->ch_Reverse);
 
-    motor_set(motor);
+	motor_set_pwm(motor);
 }
 
-void motor_set(MOTOR * motor){
-	float v = motor->speed * (float)motor->sens;
+void motor_set_pwm(MOTOR * motor){
+	uint32_t speed = motor->speed_final;
 
-	if (v >= 0){
-		if (v  > motor->ARR){
-			v  = motor->ARR;
+	if (speed >= 0){
+		if (speed > motor->speed_max){
+			speed  = motor->speed_max;
 		}
-		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_A, (uint32_t)v );
-		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_B, 0);
+		__HAL_TIM_SET_COMPARE(motor->htim, motor->ch_Forward, speed );
+		__HAL_TIM_SET_COMPARE(motor->htim, motor->ch_Reverse, 0);
 	}
 	else{
-		if (v < -motor->ARR){
-			v = -motor->ARR;
+		if (speed < -motor->speed_max){
+			speed=-motor->speed_max;
 		}
-		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_A, 0);
-		__HAL_TIM_SET_COMPARE(motor->htim, motor->channel_B, (uint32_t)(-v));
+		__HAL_TIM_SET_COMPARE(motor->htim, motor->ch_Forward, 0);
+		__HAL_TIM_SET_COMPARE(motor->htim, motor->ch_Reverse, -speed);
 	}
 }
 

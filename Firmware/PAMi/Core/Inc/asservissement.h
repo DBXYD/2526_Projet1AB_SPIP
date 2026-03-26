@@ -11,16 +11,17 @@
 #include "motor.h"
 #include "encoder.h"
 
-typedef struct asservissement{
-	float consigne_vitesse_g;
-	float consigne_vitesse_d;
+typedef struct{
+	float ref_speed;
 	float Kp;
 	float Ki;
+	uint32_t error_cumul;
+
 } ASSERVISSEMENT;
 
-void asservissement_init(ASSERVISSEMENT * asservissement,float Kp,float Ki);
-void asservissement_update(ASSERVISSEMENT *asservissement, MOTOR *motor_g, MOTOR *motor_d, ENCODER *encoder_g, ENCODER *encoder_d);
-void asservissement_set_vitesse(ASSERVISSEMENT * asservissement, float speed_g, float speed_d);
+void asser_init(ASSERVISSEMENT * asser,float Kp,float Ki);
+void asser_update(ASSERVISSEMENT *asser, MOTOR *motor, ENCODER *encoder);
+void asser_set_speed(ASSERVISSEMENT * asser, float ref_speed);
 
 
 

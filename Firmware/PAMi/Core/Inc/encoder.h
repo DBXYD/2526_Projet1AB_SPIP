@@ -13,14 +13,13 @@
 
 typedef struct encoder{
 	TIM_HandleTypeDef * htim;
-	int32_t compteur;
-	int16_t derniere_valeur;
-	float tick_tour;
-	int sens;
-
+	int32_t delta_ticks;
+	uint32_t last_cnt;
+	int cnt_tr;
 }ENCODER;
 
-void encoder_init(ENCODER * encoder,MOTOR * motor, TIM_HandleTypeDef * htim_param, float tick_par_tour, float cnt_par_tick);
+void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int tick_tr,int cnt_tick);
 void encoder_update(ENCODER * encoder);
+
 
 #endif /* INC_ENCODER_H_ */

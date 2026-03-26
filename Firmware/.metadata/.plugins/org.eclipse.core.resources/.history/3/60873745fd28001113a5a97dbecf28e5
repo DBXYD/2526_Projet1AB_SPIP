@@ -1,0 +1,50 @@
+/*
+ * asservissement.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "asservissement.h"
+
+
+
+void asservissement_init(ASSERVISSEMENT * asservissement,float Kp,float Ki){
+	asservissement->consigne_vitesse_g=0;
+	asservissement->consigne_vitesse_d=0;
+	asservissement->Kp=Kp;
+	asservissement->Ki=Ki;
+}
+void asservissement_set_vitesse(ASSERVISSEMENT * asservissement,float speed_g, float speed_d) {
+	asservissement->consigne_vitesse_g = speed_g;
+	asservissement->consigne_vitesse_d = speed_d;
+}
+
+void asservissement_update(ASSERVISSEMENT *asservissement, MOTOR *motor_g, MOTOR *motor_d, ENCODER *encoder_g, ENCODER *encoder_d) {
+
+	float erreur_g = asservissement->consigne_vitesse_g - (float)encoder_g->delta_ticks;
+	float erreur_d = asservissement->consigne_vitesse_d - (float)encoder_d->delta_ticks;
+
+	motor_g->erreur_accumulee += erreur_g;
+	motor_d->erreur_accumulee += erreur_d;
+
+	if (motor_g->erreur_accumulee > (float)motor_g->ARR){
+		motor_g->erreur_accumulee = (float)motor_g->ARR;
+	}
+	if (motor_g->erreur_accumulee < -(float)motor_g->ARR){
+		motor_g->erreur_accumulee = -(float)motor_g->ARR;
+	}
+
+	if (motor_d->erreur_accumulee > (float)motor_d->ARR){
+		motor_d->erreur_accumulee = (float)motor_d->ARR;
+	}
+	if (motor_d->erreur_accumulee < -(float)motor_d->ARR){
+		motor_d->erreur_accumulee = -(float)motor_d->ARR;
+	}
+
+	motor_g->speed = (asservissement->Kp * erreur_g) + (asservissement->Ki * motor_g->erreur_accumulee);
+	motor_d->speed = ((asservissement->Kp * erreur_d) + (asservissement->Ki * motor_d->erreur_accumulee));
+
+	motor_set_pwm(motor_g);
+	motor_set_pwm(motor_d);
+}

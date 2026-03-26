@@ -61,7 +61,7 @@ main-build: PAMi.elf secondary-outputs
 
 # Tool invocations
 PAMi.elf PAMi.map: $(OBJS) $(USER_OBJS) C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "PAMi.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "PAMi.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

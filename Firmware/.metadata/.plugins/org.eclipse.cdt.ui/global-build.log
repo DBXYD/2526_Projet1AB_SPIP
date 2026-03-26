@@ -1,7 +1,360 @@
-17:35:43 **** Build of configuration Debug for project PAMi ****
+11:53:45 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  32936	    468	   2540	  35944	   8c68	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+11:55:28 **** Incremental Build of configuration Debug for project PAMi ****
 make -j8 all 
 arm-none-eabi-size  PAMi.elf 
    text	   data	    bss	    dec	    hex	filename
-  22960	     12	   2316	  25288	   62c8	PAMi.elf
+  32936	    468	   2540	  35944	   8c68	PAMi.elf
 Finished building: default.size.stdout
+ 
+11:56:24 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  32840	    468	   2540	  35848	   8c08	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+11:57:58 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/encoder.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/encoder.d" -MT"Core/Src/encoder.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/encoder.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  32840	    468	   2540	  35848	   8c08	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+12:04:15 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  34816	    468	   2636	  37920	   9420	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+12:05:01 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  34816	    468	   2636	  37920	   9420	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+12:06:35 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  34824	    468	   2636	  37928	   9428	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+12:07:02 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  34692	    468	   2636	  37796	   93a4	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+17:57:42 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/encoder.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/encoder.d" -MT"Core/Src/encoder.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/encoder.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_TIM_PeriodElapsedCallback':
+../Core/Src/main.c:101:5: warning: 'main' is normally a non-static function [-Wmain]
+  101 | int main(void)
+      |     ^~~~
+../Core/Src/main.c:236:1: error: expected declaration or statement at end of input
+  236 | }
+      | ^
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:227:6: warning: 'Error_Handler' defined but not used [-Wunused-function]
+  227 | void Error_Handler(void)
+      |      ^~~~~~~~~~~~~
+../Core/Src/main.c:177:6: warning: 'SystemClock_Config' defined but not used [-Wunused-function]
+  177 | void SystemClock_Config(void)
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:101:5: warning: 'main' defined but not used [-Wunused-function]
+  101 | int main(void)
+      |     ^~~~
+make: *** [Core/Src/subdir.mk:55: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:59:20 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  32840	    468	   2540	  35848	   8c08	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:06:54 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_TIM_PeriodElapsedCallback':
+../Core/Src/main.c:94:59: error: invalid type argument of '->' (have 'MVTCTRL')
+   94 |                 printf(" Target Count: %ld\r\n", (long)mvt->d_target_cnt);
+      |                                                           ^~
+../Core/Src/main.c:95:69: error: invalid type argument of '->' (have 'MVTCTRL')
+   95 |                         printf(" Ticks D Actual: %ld\r\n", (long)mvt->d_ticks_d_actual);
+      |                                                                     ^~
+../Core/Src/main.c:96:69: error: invalid type argument of '->' (have 'MVTCTRL')
+   96 |                         printf(" Ticks G Actual: %ld\r\n", (long)mvt->d_ticks_g_actual);
+      |                                                                     ^~
+../Core/Src/main.c:97:66: error: invalid type argument of '->' (have 'MVTCTRL')
+   97 |                         printf(" Speed Count: %ld\r\n", (long)mvt->speed_cnt);
+      |                                                                  ^~
+make: *** [Core/Src/subdir.mk:55: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+18:07:30 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  34904	    468	   2644	  38016	   9480	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:08:21 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-size  PAMi.elf 
+   text	   data	    bss	    dec	    hex	filename
+  34904	    468	   2644	  38016	   9480	PAMi.elf
+Finished building: default.size.stdout
+ 
+18:10:03 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:20:18 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/motor.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor.d" -MT"Core/Src/motor.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor.o"
+arm-none-eabi-gcc "../Core/Src/mouvement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mouvement.d" -MT"Core/Src/mouvement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mouvement.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:21:01 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:32:05 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/asservissement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/asservissement.d" -MT"Core/Src/asservissement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asservissement.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/mouvement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mouvement.d" -MT"Core/Src/mouvement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mouvement.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35208	    468	   2644	  38320	   95b0	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:36:00 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/mouvement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mouvement.d" -MT"Core/Src/mouvement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mouvement.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:39:17 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/encoder.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/encoder.d" -MT"Core/Src/encoder.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/encoder.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35224	    468	   2644	  38336	   95c0	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:40:15 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/mouvement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mouvement.d" -MT"Core/Src/mouvement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mouvement.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:40:48 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-size  PAMi.elf 
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+18:41:12 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-size  PAMi.elf 
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+18:41:38 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/encoder.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/encoder.d" -MT"Core/Src/encoder.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/encoder.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35208	    468	   2644	  38320	   95b0	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:42:17 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-size  PAMi.elf 
+   text	   data	    bss	    dec	    hex	filename
+  35208	    468	   2644	  38320	   95b0	PAMi.elf
+Finished building: default.size.stdout
+ 
+18:43:23 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-size  PAMi.elf 
+   text	   data	    bss	    dec	    hex	filename
+  35208	    468	   2644	  38320	   95b0	PAMi.elf
+Finished building: default.size.stdout
+ 
+18:44:19 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-size  PAMi.elf 
+   text	   data	    bss	    dec	    hex	filename
+  35208	    468	   2644	  38320	   95b0	PAMi.elf
+Finished building: default.size.stdout
+ 
+18:44:48 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/mouvement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mouvement.d" -MT"Core/Src/mouvement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mouvement.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35216	    468	   2644	  38328	   95b8	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
+ 
+18:45:15 **** Incremental Build of configuration Debug for project PAMi ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/mouvement.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mouvement.d" -MT"Core/Src/mouvement.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mouvement.o"
+arm-none-eabi-gcc -o "PAMi.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\lucas\Documents\GitHub\2526_Projet1AB_SPIP\Firmware\PAMi\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PAMi.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PAMi.elf
+ 
+arm-none-eabi-size  PAMi.elf 
+arm-none-eabi-objdump -h -S PAMi.elf  > "PAMi.list"
+   text	   data	    bss	    dec	    hex	filename
+  35208	    468	   2644	  38320	   95b0	PAMi.elf
+Finished building: default.size.stdout
+ 
+Finished building: PAMi.list
  

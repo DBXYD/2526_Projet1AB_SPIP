@@ -14,23 +14,25 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
-#define DISTANCE_ROUE 87.0f
-
 typedef enum {STOP,AVANCER,TOURNER} ETAT;
 
-typedef struct mouvement{
+typedef struct{
     ETAT etat;
-    int32_t distance_ticks_cible;
-    int32_t distance_ticks_g_parcourue;
-    int32_t distance_ticks_d_parcourue;
-    float vitesse_ticks;
-    bool angle_positif;
-} MOUVEMENTCONTROL;
+    float track_width;
+    float radius;
+    int32_t d_target_cnt;
+    int32_t d_ticks_g_actual;
+    int32_t d_ticks_d_actual;
+    int32_t speed_cnt;
+    //bool angle_positif;
+} MVTCTRL;
 
-void move_init(MOUVEMENTCONTROL * mvt);
-void avancer(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float distance, float vitesse);
-void tourner(MOUVEMENTCONTROL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float angle_deg, float vitesse);
-void mouvement_update(MOUVEMENTCONTROL *mvt, ASSERVISSEMENT *asservissement, ENCODER *encoder_g, ENCODER *eencoder_d);
+void move_init(MVTCTRL * mvt,float track_width,float radius);
+void avancer(MVTCTRL *mvt, MOTOR *motor, ENCODER *encoder,float d_target_cm, float speed_cm_s);
+
+//void tourner(MVTCTRL *mvt, MOTOR *motor_g, ENCODER *encoder_g,float angle_deg,
+		//float vitesse);
+
+void mouvement_update(MVTCTRL *mvt, ASSERVISSEMENT *asser_g, ASSERVISSEMENT *asser_d, ENCODER *encoder_g, ENCODER *encoder_d);
 
 #endif

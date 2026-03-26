@@ -1,0 +1,49 @@
+/*
+ * encoder.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "encoder.h"
+
+void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, float tick_par_tour,int sens){
+	encoder->htim =htim_param;
+	encoder->delta_ticks=0;
+	encoder->last_counter=0;
+	encoder->tick_tour= tick_par_tour;
+	encoder->sens=sens;
+
+	HAL_TIM_Encoder_Start(htim_param, TIM_CHANNEL_ALL);
+	encoder->htim->Instance->CNT=0;
+}
+
+
+void encoder_update(ENCODER * encoder){
+	uint16_t current_val = encoder->htim->Instance->CNT;
+	encoder->delta_ticks = (int16_t)(current_val - encoder->last_counter) * encoder->sens;
+	encoder->last_counter = current_val;
+}
+
+void Test_Ticks_Par_Tour(void) {
+    printf("--- TEST : TOUR DE ROUE ---\r\n");
+    printf("Positionnez la roue sur le repere et appuyez sur une touche (ou attendez)...\r\n");
+
+    // 1. Reset des compteurs d'encodeurs
+    __HAL_TIM_SET_COUNTER(&htim3, 0); // Encodeur Gauche
+    __HAL_TIM_SET_COUNTER(&htim4, 0); // Encodeur Droite
+
+    printf("Tournez la roue manuellement de EXACTEMENT un tour...\r\n");
+
+    // 2. Boucle de lecture pendant 10 secondes (ou jusqu'a ce que tu sois satisfait)
+    for(int i = 0; i < 100; i++) {
+        // On recupere la valeur brute des registres CNT des timers
+        int32_t count_g = (int16_t)__HAL_TIM_GET_COUNTER(&htim3);
+        int32_t count_d = (int16_t)__HAL_TIM_GET_COUNTER(&htim4);
+
+        printf("Ticks G: %ld | Ticks D: %ld\r\n", count_g, count_d);
+        HAL_Delay(100);
+    }
+
+    printf("Test termine. Notez la valeur finale !\r\n");
+}
