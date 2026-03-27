@@ -67,7 +67,7 @@ void mouvement_update(MVTCTRL *mvt, ASSERVISSEMENT *asser_g, ASSERVISSEMENT *ass
 		}
 
 		if (mvt->d_ticks_d_actual*sens_d < mvt->d_target_cnt){
-			speed_d = mvt->speed_cnt;
+			speed_d = -mvt->speed_cnt;
 		}
 
 		if (speed_g == 0 && speed_d == 0){

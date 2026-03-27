@@ -15,7 +15,7 @@ void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int tick_tr
 	encoder->cnt_tr= tick_tr*cnt_tick;
 
 	HAL_TIM_Encoder_Start(htim_param, TIM_CHANNEL_ALL);
-	encoder->htim->Instance->CNT=0;
+	encoder->htim->Instance->CNT=32768;
 }
 
 void encoder_update(ENCODER * encoder){

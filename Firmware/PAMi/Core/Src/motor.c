@@ -21,7 +21,7 @@ void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uin
 }
 
 void motor_set_pwm(MOTOR * motor){
-	uint32_t speed = motor->speed_final;
+	int32_t speed = motor->speed_final;
 
 	if (speed >= 0){
 		if (speed > motor->speed_max){

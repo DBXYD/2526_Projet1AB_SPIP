@@ -37,7 +37,7 @@
 /* USER CODE BEGIN PD */
 #define TICKS_PAR_TOUR 1430
 #define RAYON_ROUE 1.5f
-#define COUNT_PAR_TICK 4
+#define COUNT_PAR_TICK 1
 #define KP 100.0f
 #define KI 0.0f
 #define DISTANCE_ROUE 8.7f
@@ -155,9 +155,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
 HAL_Delay(2000);
-avancer(&mvt, &motor_g, &encoder_g, 10.0f, 5.0f);
+avancer(&mvt, &motor_g, &encoder_g, 10.0f, 10.0f);
 HAL_Delay(2000);
-avancer(&mvt, &motor_g, &encoder_g, 10.0f, 5.0f);
+
 while(1){
 
 

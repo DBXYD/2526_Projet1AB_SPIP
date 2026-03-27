@@ -15,7 +15,7 @@ typedef struct motor{
 	uint32_t ch_Forward;
 	uint32_t ch_Reverse;
 	uint32_t speed_max;
-	uint32_t speed_final;
+	int32_t speed_final;
 
 }MOTOR;
 
