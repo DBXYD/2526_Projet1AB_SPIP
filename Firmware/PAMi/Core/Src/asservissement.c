@@ -20,7 +20,7 @@ void asser_set_speed(ASSERVISSEMENT * asser,float ref_speed) {
 void asser_update(ASSERVISSEMENT *asser, MOTOR *motor,ENCODER *encoder) {
 	int32_t error=asser->ref_speed - 1000*encoder->delta_ticks;
 	asser->error_cumul  += error;
-	motor->speed_final = (asser->Kp * error) + (asser->Ki * asser->error_cumul);
+	motor->speed_final = asser->ref_speed +(asser->Kp * error) + (asser->Ki * asser->error_cumul);
 
 	motor_set_pwm(motor);
 }

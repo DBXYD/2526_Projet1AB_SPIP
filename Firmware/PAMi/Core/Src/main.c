@@ -30,7 +30,17 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef enum {
+    INIT,
+    AVANCER_1,
+    TOURNER_DROITE,
+    AVANCER_2,
+    TOURNER_GAUCHE,
+    AVANCER_3,
+    FIN
+} SEQUENCE_ETAT;
 
+SEQUENCE_ETAT etape_actuelle = INIT;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -38,8 +48,8 @@
 #define TICKS_PAR_TOUR 1430
 #define RAYON_ROUE 1.5f
 #define COUNT_PAR_TICK 1
-#define KP 100.0f
-#define KI 0.0f
+#define KP 3.0f
+#define KI 0.1f
 #define DISTANCE_ROUE 8.7f
 /* USER CODE END PD */
 
@@ -70,9 +80,6 @@ int v=0;
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
-
-
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -82,25 +89,7 @@ int __io_putchar(int ch){
 	return ch;
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if(htim->Instance == TIM6){
-        encoder_update(&encoder_g);
-        encoder_update(&encoder_d);
-        asser_update(&asser_g,&motor_g, &encoder_g);
-        asser_update(&asser_d,&motor_d, &encoder_d);
-        mouvement_update(&mvt, &asser_g,&asser_d, &encoder_g, &encoder_d);
-        if(v==100){
-        	printf("Mouvement Reset:\r\n");
-        	printf(" Target Count: %ld\r\n", (long)mvt.d_target_cnt);
-			printf(" Ticks D Actual: %ld\r\n", (long)mvt.d_ticks_d_actual);
-			printf(" Ticks G Actual: %ld\r\n", (long)mvt.d_ticks_g_actual);
-			printf(" Speed Count: %ld\r\n", (long)mvt.speed_cnt);
-			v=0;
-        }
-        v++;
-	}
 
-}
 /* USER CODE END 0 */
 
 /**
@@ -144,22 +133,69 @@ int main(void)
   motor_init(&motor_d, &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4,4142);
   encoder_init(&encoder_g, &htim3, TICKS_PAR_TOUR,COUNT_PAR_TICK);
   encoder_init(&encoder_d, &htim4, TICKS_PAR_TOUR,COUNT_PAR_TICK);
-  move_init(&mvt,DISTANCE_ROUE,RAYON_ROUE);
+  move_init(&mvt,&encoder_g,DISTANCE_ROUE,RAYON_ROUE);
   asser_init(&asser_d, KP, KI);
   asser_init(&asser_g, KP, KI);
 
   HAL_TIM_Base_Start_IT(&htim6);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-HAL_Delay(2000);
-avancer(&mvt, &motor_g, &encoder_g, 10.0f, 10.0f);
-HAL_Delay(2000);
 
 while(1){
+	switch (etape_actuelle) {
 
+		case INIT:
+			HAL_Delay(2000);
+			etape_actuelle = AVANCER_1;
+			break;
+
+		case AVANCER_1:
+			avancer(&mvt, &encoder_g, 20.0f, 20.0f);
+			etape_actuelle = TOURNER_DROITE;
+			break;
+
+		case TOURNER_DROITE:
+			if (mvt.etat == STOP) {
+				HAL_Delay(500);
+				tourner(&mvt, &encoder_g, -M_PI-M_PI/2, 10.0f);
+				etape_actuelle = AVANCER_2;
+			}
+			break;
+
+		case AVANCER_2:
+			if (mvt.etat == STOP) {
+				HAL_Delay(500);
+				avancer(&mvt, &encoder_g, 10.0f, 20.0f);
+				etape_actuelle = TOURNER_GAUCHE;
+			}
+			break;
+
+		case TOURNER_GAUCHE:
+			if (mvt.etat == STOP) {
+				HAL_Delay(500);
+				tourner(&mvt, &encoder_g, -M_PI/2, 10.0f);
+				etape_actuelle = AVANCER_3;
+			}
+			break;
+
+		case AVANCER_3:
+			if (mvt.etat == STOP) {
+				HAL_Delay(500);
+				avancer(&mvt, &encoder_g, 10.0f, 20.0f);
+				etape_actuelle = FIN;
+			}
+			break;
+
+		case FIN:
+			if (mvt.etat == STOP) {
+
+			}
+			break;
+	    }
 
     /* USER CODE END WHILE */
 

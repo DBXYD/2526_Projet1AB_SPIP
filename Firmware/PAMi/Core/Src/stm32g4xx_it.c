@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "mouvement.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,6 +43,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+extern MOTOR motor_g, motor_d;
+extern ENCODER encoder_g, encoder_d;
+extern ASSERVISSEMENT asser_d,asser_g;
+extern MVTCTRL mvt;
+extern int v;
 
 /* USER CODE END PV */
 
@@ -214,5 +220,28 @@ void TIM6_DAC_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(htim->Instance == TIM6){
+        encoder_update(&encoder_g);
+        encoder_update(&encoder_d);
+        asser_update(&asser_g,&motor_g, &encoder_g);
+        asser_update(&asser_d,&motor_d, &encoder_d);
+        mouvement_update(&mvt, &asser_g,&asser_d, &encoder_g, &encoder_d);
 
+        if(v==100){
+        	printf("Mouvement Reset:\r\n");
+        	printf(" Target Count: %ld\r\n", (long)mvt.d_target_cnt);
+			printf(" Ticks D Actual: %ld\r\n", (long)mvt.d_ticks_d_actual);
+			printf(" Ticks G Actual: %ld\r\n", (long)mvt.d_ticks_g_actual);
+			printf(" Speed Count: %ld\r\n", (long)mvt.speed_cnt);
+			printf(" Speed final d: %ld\r\n", (long)motor_d.speed_final);
+			printf(" Speed final g: %ld\r\n", (long)motor_g.speed_final);
+			printf(" Speed reel d: %ld\r\n", (long)encoder_d.delta_ticks);
+			printf(" Speed reel g: %ld\r\n", (long)encoder_g.delta_ticks);
+			v=0;
+        }
+        v++;
+	}
+
+}
 /* USER CODE END 1 */

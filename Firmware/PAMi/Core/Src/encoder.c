@@ -11,11 +11,12 @@
 void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int tick_tr,int cnt_tick){
 	encoder->htim =htim_param;
 	encoder->delta_ticks=0;
-	encoder->last_cnt=0;
+	encoder->last_cnt=32768;
+	encoder->htim->Instance->CNT=32768;
 	encoder->cnt_tr= tick_tr*cnt_tick;
 
 	HAL_TIM_Encoder_Start(htim_param, TIM_CHANNEL_ALL);
-	encoder->htim->Instance->CNT=32768;
+
 }
 
 void encoder_update(ENCODER * encoder){

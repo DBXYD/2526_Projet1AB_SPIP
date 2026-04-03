@@ -89,14 +89,10 @@ void Error_Handler(void);
 #define USR_LED_2_GPIO_Port GPIOC
 #define USR_LED_1_Pin GPIO_PIN_8
 #define USR_LED_1_GPIO_Port GPIOA
-#define MotorB_PWM_Forward_Pin GPIO_PIN_9
-#define MotorB_PWM_Forward_GPIO_Port GPIOA
 #define MotorB_PWM_Reverse_Pin GPIO_PIN_10
 #define MotorB_PWM_Reverse_GPIO_Port GPIOA
 #define MotorA_PWM_Forward_Pin GPIO_PIN_15
 #define MotorA_PWM_Forward_GPIO_Port GPIOA
-#define MotorA_PWM_Reverse_Pin GPIO_PIN_3
-#define MotorA_PWM_Reverse_GPIO_Port GPIOB
 #define MotorA_ENC_A_Pin GPIO_PIN_4
 #define MotorA_ENC_A_GPIO_Port GPIOB
 #define MotorA_ENC_B_Pin GPIO_PIN_5

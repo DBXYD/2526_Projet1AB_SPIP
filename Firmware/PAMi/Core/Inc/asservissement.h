@@ -15,7 +15,7 @@ typedef struct{
 	float ref_speed;
 	float Kp;
 	float Ki;
-	uint32_t error_cumul;
+	int32_t error_cumul;
 
 } ASSERVISSEMENT;
 
