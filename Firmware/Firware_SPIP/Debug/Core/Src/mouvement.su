@@ -1,0 +1,4 @@
+../Core/Src/mouvement.c:11:6:move_init	32	static
+../Core/Src/mouvement.c:25:6:avancer	32	static
+../Core/Src/mouvement.c:37:6:tourner	32	static
+../Core/Src/mouvement.c:48:6:mouvement_update	48	static

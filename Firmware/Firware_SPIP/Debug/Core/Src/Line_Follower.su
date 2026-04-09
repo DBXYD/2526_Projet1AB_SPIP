@@ -1,0 +1,3 @@
+../Core/Src/Line_Follower.c:12:6:LF_Init	32	static
+../Core/Src/Line_Follower.c:25:6:LF_ReadSensors	32	static
+../Core/Src/Line_Follower.c:31:6:LF_Update	16	static
