@@ -45,7 +45,15 @@ void turn (MOVE *move, ENCODER *encoder,float angle_target_rad, float speed_cm_s
 }
 
 
-void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCODER *encoder_left, ENCODER *encoder_right) {
+void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCODER *encoder_left, ENCODER *encoder_right,US_SENSOR* us_sensor) {
+	if (us_sensor->distance_cm > 0.0f && us_sensor->distance_cm  < 10.0f) {
+	        control_set_speed(control_left, 0);
+	        control_set_speed(control_right, 0);
+	        return;
+	}
+
+
+
 	if (move->status == STOP){
 	        control_set_speed(control_left, 0);
 	        control_set_speed(control_right, 0);
@@ -67,6 +75,7 @@ void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCO
 	if(move->angle_target_rad<0){
 		sens_a=-1;
 	}
+
 	move->angle_actual_rad = abs(sens_left*move->d_ticks_left_actual + sens_right*move->d_ticks_right_actual)/move->track_width;
 
 	if (move->status == MOVE_FORWARD){
@@ -79,6 +88,9 @@ void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCO
 		}
 		control_set_speed(control_left,speed_left);
 		control_set_speed(control_right,speed_right);
+		if (speed_left == 0 && speed_right == 0){
+			move->status = STOP;
+		}
 	}
 	else if (move->status == TURN) {
 
@@ -88,11 +100,12 @@ void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCO
 			  control_set_speed(control_left,speed_left);
 			  control_set_speed(control_right,speed_right);
 		}
+		if (speed_left == 0 && speed_right == 0){
+			move->status = STOP;
+		}
 	}
 
-	if (speed_left == 0 && speed_right == 0){
-		move->status = STOP;
-	}
+
 
 
 

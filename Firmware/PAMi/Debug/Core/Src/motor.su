@@ -1,2 +1,0 @@
-../Core/Src/motor.c:10:6:motor_init	24	static
-../Core/Src/motor.c:23:6:motor_set_pwm	24	static

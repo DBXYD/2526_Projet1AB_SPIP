@@ -1,0 +1,95 @@
+/*
+ * mouvement.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "move.h"
+#include <stdio.h>
+
+void move_init(MOVE * move,ENCODER *encoder,float track_width,float radius){
+	move->radius=radius;
+	float perimeter_cm = 2.0f * M_PI * move->radius;
+	float K=(encoder->cnt_tr/perimeter_cm);
+	move->status=STOP;
+	move->d_target_cnt=0;
+	move->d_ticks_left_actual=0;
+	move->d_ticks_right_actual=0;
+	move->speed_cnt=0;
+	move->track_width=track_width*K;
+	move->angle_actual_rad=0;
+}
+
+
+void move_forward(MOVE * move, ENCODER *encoder,float d_target_cm, float speed_cm_s){
+    float perimeter_cm = 2.0f * M_PI * move->radius;
+    float K=(encoder->cnt_tr/perimeter_cm);
+    move->d_target_cnt =d_target_cm*K;
+    move->speed_cnt = (int32_t) (speed_cm_s*K) ;
+    move->d_ticks_left_actual=0;
+    move->d_ticks_right_actual=0;
+
+    move->status = MOVE_FORWARD;
+
+}
+
+void turn (MOVE *move, ENCODER *encoder,float angle_target_rad, float speed_cm_s){
+    float perimeter_cm = 2.0f * M_PI * move->radius;
+    float K=(encoder->cnt_tr/perimeter_cm);
+    move->angle_target_rad=angle_target_rad;
+    move->speed_cnt = (int32_t) (speed_cm_s*K) ;
+    move->d_ticks_left_actual=0;
+    move->d_ticks_right_actual=0;
+    move->status = TURN;
+}
+
+
+void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCODER *encoder_left, ENCODER *encoder_right) {
+	if (move->status == STOP){
+	        control_set_speed(control_left, 0);
+	        control_set_speed(control_right, 0);
+	        return;
+	    }
+
+	move->d_ticks_left_actual += encoder_left->delta_ticks;
+	move->d_ticks_right_actual += encoder_right->delta_ticks;
+
+	int32_t speed_left = 0, speed_right = 0;
+	int sens_left = 1, sens_right = -1, sens_a = 1;
+	float Ks = 0;
+
+	if (move->angle_target_rad < 0) sens_a = -1;
+
+	if (move->status == MOVE_FORWARD){
+		int32_t error_sync = abs(move->d_ticks_left_actual) - abs(move->d_ticks_right_actual);
+		int32_t correction = (int32_t)(error_sync * Ks);
+
+		if (abs(move->d_ticks_left_actual) < move->d_target_cnt) {
+			speed_left = move->speed_cnt - correction;
+		}
+		if (abs(move->d_ticks_right_actual) < move->d_target_cnt) {
+			speed_right = -(move->speed_cnt + correction);
+		}
+
+		control_set_speed(control_left, speed_left);
+		control_set_speed(control_right, speed_right);
+	}
+	else if (move->status == TURN) {
+		move->angle_actual_rad = (float)(abs(move->d_ticks_left_actual) + abs(move->d_ticks_right_actual)) / move->track_width;
+
+		if(abs(move->angle_actual_rad) <= abs(move->angle_target_rad)){
+			  speed_left = sens_a * move->speed_cnt;
+			  speed_right = sens_a * move->speed_cnt;
+			  control_set_speed(control_left, speed_left);
+			  control_set_speed(control_right, speed_right);
+		}
+	}
+
+	if (speed_left == 0 && speed_right == 0){
+		move->status = STOP;
+	}
+}
+
+
+

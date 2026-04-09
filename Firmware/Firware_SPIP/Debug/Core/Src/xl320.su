@@ -1,0 +1,13 @@
+../Core/Src/xl320.c:50:17:update_crc	24	static
+../Core/Src/xl320.c:59:13:XL320_Transmit	16	static
+../Core/Src/xl320.c:66:6:XL320_Init	16	static
+../Core/Src/xl320.c:70:6:XL320_WriteByte	40	static
+../Core/Src/xl320.c:87:6:XL320_WriteWord	40	static
+../Core/Src/xl320.c:103:6:XL320_SetGoalPosition	16	static
+../Core/Src/xl320.c:107:6:XL320_SetSpeed	16	static
+../Core/Src/xl320.c:111:6:XL320_SetTorque	16	static
+../Core/Src/xl320.c:114:6:XL320_SetTorqueLimit	16	static
+../Core/Src/xl320.c:118:6:XL320_SetStatusReturnLevel	16	static
+../Core/Src/xl320.c:121:6:XL320_Config_LowPower	16	static
+../Core/Src/xl320.c:132:6:status_tail_init	16	static
+../Core/Src/xl320.c:138:6:move_tail	16	static

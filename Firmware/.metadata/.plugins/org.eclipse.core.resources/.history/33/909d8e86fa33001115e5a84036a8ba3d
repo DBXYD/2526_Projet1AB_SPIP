@@ -1,0 +1,46 @@
+/*
+ * strategy.c
+ *
+ *  Created on: Apr 9, 2026
+ *      Author: lucasa
+ */
+
+
+#include "strategy.h"
+
+
+/*
+ * 			printf("Distance (cm) ultra_son : %f \n\r",us_sensor.distance_cm);
+			printf("Suiveur de ligne : %d \n\r",h_lineFollower.position);
+
+			switch (etape_actuelle) {
+			case INIT:
+				HAL_Delay(2000);
+				etape_actuelle = AVANCER_1;
+				break;
+			case AVANCER_1:
+				move_forward(&move, &encoder_left, 75.0, 10.0);
+				etape_actuelle = TOURNER;
+				break;
+			case TOURNER:
+				if (move.status == STOP) {
+					HAL_Delay(500);
+					turn(&move, &encoder_left, -M_PI/2, 10.0);
+					etape_actuelle = AVANCER_2;
+				}
+				break;
+			case AVANCER_2:
+				if (move.status== STOP) {
+					HAL_Delay(500);
+					move_forward(&move, &encoder_left, 67.5, 10.0);
+					etape_actuelle = FIN;
+				}
+				break;
+
+			case FIN:
+				if (move.status == STOP) {
+
+				}
+				break;
+ *
+ */

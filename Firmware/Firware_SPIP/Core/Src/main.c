@@ -28,6 +28,7 @@
 #include <Ultrasound.h>
 #include <Line_Follower.h>
 #include <strategy.h>
+#include "xl320.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,8 +43,8 @@
 #define RADIUS 1.5
 #define COUNT_TICK 1
 #define KP 2.0
-#define KI 0.1
-#define TRACK_WIDTH 8.7
+#define KI 1.0
+#define TRACK_WIDTH 8.4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -60,7 +61,8 @@ extern MOTOR motor_left, motor_right;
 extern ENCODER encoder_left, encoder_right;
 extern CONTROL control_left,control_right;
 extern MOVE move;
-STATE * status;
+STATE status;
+STATE_TAIL status_tail;
 
 int reset =0;
 /* USER CODE END PV */
@@ -73,11 +75,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int __io_putchar(int ch)
+/*int __io_putchar(int ch)
 {
 	HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
 	return ch;
-}
+}*/
 /* USER CODE END 0 */
 
 /**
@@ -117,7 +119,7 @@ int main(void)
 	MX_TIM6_Init();
 	MX_TIM1_Init();
 	/* USER CODE BEGIN 2 */
-	printf("Hello world\r\n");
+
 	//Initialisation capteur Ultra Son
 	US_Init(&us_sensor,&htim1,US_TRIG_GPIO_Port,US_TRIG_Pin,US_ECHO_INT_GPIO_Port,US_ECHO_INT_Pin);
 
@@ -126,7 +128,7 @@ int main(void)
 	uint16_t pins[4] = {X1_INT_Pin, X2_INT_Pin, X3_INT_Pin, X4_INT_Pin};
 	LF_Init(&h_lineFollower, ports, pins, 4);
 
-	// Initialisation moteur + encodeur + asservissement + mouvement
+	// Initialisation moteur + encodeur + asservissement + mouvement+xl320
 	motor_init(&motor_left, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2,4142);
 	motor_init(&motor_right, &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4,4142);
 	encoder_init(&encoder_left, &htim3, TICKS_TOUR,COUNT_TICK);
@@ -135,9 +137,17 @@ int main(void)
 	control_init(&control_right, KP, KI);
 	control_init(&control_left, KP, KI);
 	status_init(&status);
+	status_tail_init(&status_tail);
+
+	HAL_Delay(2000);
+	XL320_Init(&huart1);
+	XL320_Config_LowPower(254);
+	XL320_SetSpeed(254, 300);
 
 	//Démarrage de l'intéruption TIM 6
 	HAL_TIM_Base_Start_IT(&htim6);
+
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -145,6 +155,7 @@ int main(void)
 	while (1)
 	{
 		yellow_one(&status);
+		move_tail(&status_tail);
 
 		/* USER CODE END WHILE */
 
@@ -225,7 +236,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	    encoder_update(&encoder_right);
 		control_update(&control_left,&motor_left, &encoder_left);
 		control_update(&control_right,&motor_right, &encoder_right);
-		move_update(&move, &control_left,&control_right, &encoder_left, &encoder_right);
+		move_update(&move, &control_left,&control_right, &encoder_left, &encoder_right,&us_sensor);
 		if (reset == 40){
 			error_reset(&control_left);
 			error_reset(&control_right);

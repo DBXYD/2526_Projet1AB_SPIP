@@ -46,6 +46,7 @@ void yellow_one(STATE * status){
 					}
 					break;
 
+
 			}
 }
 void status_init(STATE * status){

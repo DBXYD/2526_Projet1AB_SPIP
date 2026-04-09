@@ -1,0 +1,101 @@
+/*
+ * mouvement.c
+ *
+ *  Created on: Mar 12, 2026
+ *      Author: lucasa
+ */
+
+#include "mouvement.h"
+#include <stdio.h>
+
+void move_init(MOVE * move,ENCODER *encoder,float track_width,float radius){
+	mvt->radius=radius;
+	float perimeter_cm = 2.0f * M_PI * mvt->radius;
+	float K=(encoder->cnt_tr/perimeter_cm);
+	mvt->etat=STOP;
+	mvt->d_target_cnt=0;
+	mvt->d_ticks_d_actual=0;
+	mvt->d_ticks_g_actual=0;
+	mvt->speed_cnt=0;
+	mvt->track_width=track_width*K;
+	mvt->angle_actual=0;
+}
+
+
+void avancer(MVTCTRL *mvt, ENCODER *encoder,float d_target_cm, float speed_cm_s){
+    float perimeter_cm = 2.0f * M_PI * mvt->radius;
+    float K=(encoder->cnt_tr/perimeter_cm);
+    mvt->d_target_cnt =d_target_cm*K;
+    mvt->speed_cnt = (int32_t) (speed_cm_s*K) ;
+	mvt->d_ticks_g_actual=0;
+	mvt->d_ticks_d_actual=0;
+
+    mvt->etat = AVANCER;
+
+}
+
+void tourner(MVTCTRL *mvt, ENCODER *encoder,float angle_rad, float speed_cm_s){
+    float perimeter_cm = 2.0f * M_PI * mvt->radius;
+    float K=(encoder->cnt_tr/perimeter_cm);
+	mvt->angle_rad=angle_rad;
+    mvt->speed_cnt = (int32_t) (speed_cm_s*K) ;
+	mvt->d_ticks_g_actual=0;
+	mvt->d_ticks_d_actual=0;
+    mvt->etat = TOURNER;
+}
+
+
+void mouvement_update(MVTCTRL *mvt, ASSERVISSEMENT *asser_g, ASSERVISSEMENT *asser_d, ENCODER *encoder_g, ENCODER *encoder_d) {
+	if (mvt->etat == STOP){
+	        asser_set_speed(asser_g, 0);
+	        asser_set_speed(asser_d, 0);
+	        return;
+	    }
+
+	mvt->d_ticks_g_actual += encoder_g->delta_ticks;
+	mvt->d_ticks_d_actual += encoder_d->delta_ticks;
+
+	int32_t speed_g = 0, speed_d = 0;
+	int sens_d=1, sens_g=1, sens_a=1;
+
+	if (encoder_d->delta_ticks<0){
+		sens_d=-1;
+	}
+	if (encoder_g->delta_ticks<0){
+		sens_g=-1;
+			}
+	if(mvt->angle_rad<0){
+		sens_a=-1;
+	}
+	mvt->angle_actual = abs(sens_g*mvt->d_ticks_g_actual + sens_d*mvt->d_ticks_d_actual)/mvt->track_width;
+
+	if (mvt->etat == AVANCER){
+		if (mvt-> d_ticks_g_actual*sens_g< mvt->d_target_cnt){
+			speed_g = mvt->speed_cnt;
+		}
+
+		if (mvt->d_ticks_d_actual*sens_d < mvt->d_target_cnt){
+			speed_d = -mvt->speed_cnt;
+		}
+			asser_set_speed(asser_g,speed_g);
+			asser_set_speed(asser_d,speed_d);
+	}
+	else if (mvt->etat == TOURNER) {
+
+		if(abs(mvt->angle_actual)<=abs(mvt->angle_rad)){
+			  speed_g = sens_a*mvt->speed_cnt;
+			  speed_d = sens_a*mvt->speed_cnt;
+			  asser_set_speed(asser_g,speed_g);
+			  asser_set_speed(asser_d,speed_d);
+		}
+	}
+
+	if (speed_g == 0 && speed_d == 0){
+		mvt->etat = STOP;
+	}
+
+
+
+
+}
+

@@ -1,0 +1,40 @@
+/*
+ * xl320.h
+ *
+ *  Created on: Apr 9, 2026
+ *      Author: lucasa
+ */
+
+#ifndef INC_XL320_H_
+#define INC_XL320_H_
+
+#include "main.h"
+
+typedef enum {
+    MOVE_1,
+    MOVE_2
+} TAIL_STATE;
+
+TAIL_STATE current_state = MOVE_1;
+
+
+#define XL320_ADDR_TORQUE_ENABLE    24
+#define XL320_ADDR_LED              25
+#define XL320_ADDR_GOAL_POSITION    30
+#define XL320_ADDR_GOAL_SPEED       32
+#define XL320_ADDR_TORQUE_LIMIT     35
+#define XL320_ADDR_STATUS_RETURN    17
+
+
+void XL320_Init(UART_HandleTypeDef *huart);
+void XL320_Config_LowPower(uint8_t id);
+
+void XL320_SetTorque(uint8_t id, uint8_t enable);
+void XL320_SetLED(uint8_t id, uint8_t color);
+void XL320_SetGoalPosition(uint8_t id, uint16_t position);
+void XL320_SetTorqueLimit(uint8_t id, uint16_t limit);
+void XL320_SetSpeed(uint8_t id, uint16_t speed);
+void XL320_WriteByte(uint8_t id, uint16_t address, uint8_t value);
+void XL320_WriteWord(uint8_t id, uint16_t address, uint16_t value);
+
+#endif /* INC_XL320_H_ */

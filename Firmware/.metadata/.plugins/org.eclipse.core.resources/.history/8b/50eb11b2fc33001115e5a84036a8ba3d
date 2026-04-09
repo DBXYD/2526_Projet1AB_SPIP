@@ -1,0 +1,53 @@
+/*
+ * strategy.c
+ *
+ *  Created on: Apr 9, 2026
+ *      Author: lucasa
+ */
+
+
+#include "strategy.h"
+
+
+
+MOTOR motor_left, motor_right;
+ENCODER encoder_left, encoder_right;
+CONTROL control_left,control_right;
+MOVE move;
+
+void yellow_one(SEQUENCE status_actual){
+	switch (status_actual) {
+				case INIT:
+					HAL_Delay(2000);
+					status_actual = MOVE_FORWARD_1;
+					break;
+				case MOVE_FORWARD_1:
+					move_forward(&move, &encoder_left, 86.0, 20.0);
+					status_actual = TURN_1;
+					break;
+				case TURN_1:
+					if (move.status == STOP) {
+						HAL_Delay(500);
+						turn(&move, &encoder_left, -M_PI/2, 10.0);
+						status_actual = MOVE_FORWARD_2;
+					}
+					break;
+				case MOVE_FORWARD_2:
+					if (move.status== STOP) {
+						HAL_Delay(500);
+						move_forward(&move, &encoder_left, 67.5, 20.0);
+						status_actual = END;
+					}
+					break;
+
+				case END:
+					if (move.status == STOP) {
+
+					}
+					break;
+
+			}
+}
+
+
+

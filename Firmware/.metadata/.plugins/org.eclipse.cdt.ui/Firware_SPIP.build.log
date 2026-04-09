@@ -1,0 +1,17 @@
+18:32:48 **** Incremental Build of configuration Debug for project Firware_SPIP ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/xl320.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/xl320.d" -MT"Core/Src/xl320.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/xl320.o"
+arm-none-eabi-gcc -o "Firware_SPIP.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/lucasa/Documents/2526_Projet1AB_SPIP/Firmware/Firware_SPIP/STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Firware_SPIP.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Firware_SPIP.elf
+ 
+arm-none-eabi-size  Firware_SPIP.elf 
+arm-none-eabi-objdump -h -S Firware_SPIP.elf  > "Firware_SPIP.list"
+   text	   data	    bss	    dec	    hex	filename
+  47572	    468	   2812	  50852	   c6a4	Firware_SPIP.elf
+Finished building: default.size.stdout
+ 
+Finished building: Firware_SPIP.list
+ 
+
+18:32:49 Build Finished. 0 errors, 0 warnings. (took 1s.68ms)
+

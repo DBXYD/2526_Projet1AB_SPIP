@@ -1,3 +1,0 @@
-../Core/Src/asservissement.c:10:6:asser_init	24	static
-../Core/Src/asservissement.c:16:6:asser_set_speed	16	static
-../Core/Src/asservissement.c:20:6:asser_update	32	static

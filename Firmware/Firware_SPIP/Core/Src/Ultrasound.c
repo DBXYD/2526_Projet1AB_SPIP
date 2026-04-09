@@ -28,4 +28,5 @@ void US_Trigger(US_SENSOR* us_sensor) {
 void US_Update(US_SENSOR* us_sensor){
 	uint32_t echo_duration = us_sensor->echo_end - us_sensor->echo_start;
     us_sensor->distance_cm = (echo_duration * 0.0343) / 2;
+
 }
