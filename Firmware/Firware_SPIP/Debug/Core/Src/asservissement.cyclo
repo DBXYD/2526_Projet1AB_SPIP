@@ -1,4 +1,0 @@
-../Core/Src/asservissement.c:10:6:asser_init	1
-../Core/Src/asservissement.c:16:6:asser_set_speed	1
-../Core/Src/asservissement.c:20:6:asser_update	1
-../Core/Src/asservissement.c:28:6:error_reset	1

@@ -27,32 +27,23 @@
 #include <stdio.h>
 #include <Ultrasound.h>
 #include <Line_Follower.h>
-#include <mouvement.h>
+#include <strategy.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef enum {
-	INIT,
-	AVANCER_1,
-	TOURNER_DROITE,
-	AVANCER_2,
-	TOURNER_GAUCHE,
-	AVANCER_3,
-	FIN
-} SEQUENCE_ETAT;
 
-SEQUENCE_ETAT etape_actuelle = INIT;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TICKS_PAR_TOUR 1430
-#define RAYON_ROUE 1.5f
-#define COUNT_PAR_TICK 1
-#define KP 2.0f
-#define KI 0.1f
-#define DISTANCE_ROUE 8.7f
+#define TICKS_TOUR 1430
+#define RADIUS 1.5
+#define COUNT_TICK 1
+#define KP 2.0
+#define KI 0.1
+#define TRACK_WIDTH 8.7
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -65,11 +56,11 @@ SEQUENCE_ETAT etape_actuelle = INIT;
 /* USER CODE BEGIN PV */
 US_SENSOR us_sensor;
 
-MOTOR motor_g, motor_d;
-ENCODER encoder_g, encoder_d;
-
-ASSERVISSEMENT asser_d,asser_g;
-MVTCTRL mvt;
+extern MOTOR motor_left, motor_right;
+extern ENCODER encoder_left, encoder_right;
+extern CONTROL control_left,control_right;
+extern MOVE move;
+STATE * status;
 
 int reset =0;
 /* USER CODE END PV */
@@ -136,13 +127,14 @@ int main(void)
 	LF_Init(&h_lineFollower, ports, pins, 4);
 
 	// Initialisation moteur + encodeur + asservissement + mouvement
-	motor_init(&motor_g, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2,4142);
-	motor_init(&motor_d, &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4,4142);
-	encoder_init(&encoder_g, &htim3, TICKS_PAR_TOUR,COUNT_PAR_TICK);
-	encoder_init(&encoder_d, &htim4, TICKS_PAR_TOUR,COUNT_PAR_TICK);
-	move_init(&mvt,&encoder_g,DISTANCE_ROUE,RAYON_ROUE);
-	asser_init(&asser_d, KP, KI);
-	asser_init(&asser_g, KP, KI);
+	motor_init(&motor_left, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2,4142);
+	motor_init(&motor_right, &htim2, TIM_CHANNEL_3, TIM_CHANNEL_4,4142);
+	encoder_init(&encoder_left, &htim3, TICKS_TOUR,COUNT_TICK);
+	encoder_init(&encoder_right, &htim4, TICKS_TOUR,COUNT_TICK);
+	move_init(&move,&encoder_left,TRACK_WIDTH,RADIUS);
+	control_init(&control_right, KP, KI);
+	control_init(&control_left, KP, KI);
+	status_init(&status);
 
 	//Démarrage de l'intéruption TIM 6
 	HAL_TIM_Base_Start_IT(&htim6);
@@ -152,53 +144,8 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-			printf("Distance (cm) ultra_son : %f \n\r",us_sensor.distance_cm);
-			printf("Suiveur de ligne : %d \n\r",h_lineFollower.position);
+		yellow_one(&status);
 
-			switch (etape_actuelle) {
-			case INIT:
-				HAL_Delay(2000);
-				etape_actuelle = AVANCER_1;
-				break;
-			case AVANCER_1:
-				avancer(&mvt, &encoder_g, 20.0f, 20.0f);
-				etape_actuelle = TOURNER_DROITE;
-				break;
-			case TOURNER_DROITE:
-				if (mvt.etat == STOP) {
-					HAL_Delay(500);
-					tourner(&mvt, &encoder_g, M_PI/2, 10.0f);
-					etape_actuelle = AVANCER_2;
-				}
-				break;
-			case AVANCER_2:
-				if (mvt.etat == STOP) {
-					HAL_Delay(500);
-					avancer(&mvt, &encoder_g, 10.0f, 20.0f);
-					etape_actuelle = TOURNER_GAUCHE;
-				}
-				break;
-			case TOURNER_GAUCHE:
-				if (mvt.etat == STOP) {
-					HAL_Delay(500);
-					tourner(&mvt, &encoder_g, -M_PI/2, 10.0f);
-					etape_actuelle = AVANCER_3;
-				}
-				break;
-			case AVANCER_3:
-				if (mvt.etat == STOP) {
-					HAL_Delay(500);
-					avancer(&mvt, &encoder_g, 10.0f, 20.0f);
-					etape_actuelle = FIN;
-				}
-				break;
-			case FIN:
-				if (mvt.etat == STOP) {
-
-				}
-				break;
-
-		}
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -274,14 +221,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		US_Trigger(&us_sensor);
 		LF_Update(&h_lineFollower);
 
-		encoder_update(&encoder_g);
-	    encoder_update(&encoder_d);
-		asser_update(&asser_g,&motor_g, &encoder_g);
-		asser_update(&asser_d,&motor_d, &encoder_d);
-		mouvement_update(&mvt, &asser_g,&asser_d, &encoder_g, &encoder_d);
+		encoder_update(&encoder_left);
+	    encoder_update(&encoder_right);
+		control_update(&control_left,&motor_left, &encoder_left);
+		control_update(&control_right,&motor_right, &encoder_right);
+		move_update(&move, &control_left,&control_right, &encoder_left, &encoder_right);
 		if (reset == 40){
-			error_reset(&asser_g);
-			error_reset(&asser_d);
+			error_reset(&control_left);
+			error_reset(&control_right);
 			reset = 0;
 		}
 		reset++;

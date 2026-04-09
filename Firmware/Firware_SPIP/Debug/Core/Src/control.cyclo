@@ -1,0 +1,4 @@
+../Core/Src/control.c:10:6:control_init	1
+../Core/Src/control.c:16:6:control_set_speed	1
+../Core/Src/control.c:20:6:control_update	1
+../Core/Src/control.c:28:6:error_reset	1

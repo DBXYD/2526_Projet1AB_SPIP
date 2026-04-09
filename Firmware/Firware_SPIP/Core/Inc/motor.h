@@ -19,6 +19,8 @@ typedef struct motor{
 
 }MOTOR;
 
+
+
 void motor_init(MOTOR * motor, TIM_HandleTypeDef * htim_param, uint32_t chA, uint32_t chB,uint32_t speed_max);
 void motor_set_pwm(MOTOR * motor);
 

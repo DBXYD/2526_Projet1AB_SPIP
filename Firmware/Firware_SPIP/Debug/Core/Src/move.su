@@ -1,0 +1,4 @@
+../Core/Src/move.c:11:6:move_init	32	static
+../Core/Src/move.c:25:6:move_forward	32	static
+../Core/Src/move.c:37:6:turn	32	static
+../Core/Src/move.c:48:6:move_update	48	static
