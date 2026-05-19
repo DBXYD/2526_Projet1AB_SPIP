@@ -33,22 +33,13 @@ Tension d’alimentation : 3.3 V
 Courant visé : 1 mA
 
 - LED bleue :  
-  
-\[
-  (3.3 - 2.6) / 1\text{ mA} = 0.7\text{ kΩ} \Rightarrow 680\ \Omega
-  \]
+  (3.3 - 2.6) / 1 mA = 0.7 kΩ => 680 Ω
 
 - LED rouge :  
-  
-\[
-  (3.3 - 1.7) / 1\text{ mA} = 1.6\text{ kΩ} \Rightarrow 1.6\text{ kΩ}
-  \]
+  (3.3 - 1.7) / 1 mA = 1.6 kΩ => 1.6 kΩ
 
 - LED verte :  
-  
-\[
-  (3.3 - 2.3) / 1\text{ mA} = 1\text{ kΩ} \Rightarrow 1\text{ kΩ}
-  \]
+  (3.3 - 2.3) / 1 mA = 1 kΩ => 1 kΩ
 
 
 ## Choix des tailles des composants CMS
@@ -62,9 +53,7 @@ Courant visé : 1 mA
 
 ### Vérification de la puissance
 
-\[
-P < 3.3\text{ V} \times 5\text{ mA} = 16.5\text{ mW}
-\]
+P < 3.3 V x 5 mA = 16.5 mW
 
 → Compatible avec les boîtiers 0402 et 0805
 
