@@ -77,10 +77,16 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : MotorFault_Pin USR_BTN_3_Pin USR_BTN_2_Pin USR_BTN_1_Pin */
-  GPIO_InitStruct.Pin = MotorFault_Pin|USR_BTN_3_Pin|USR_BTN_2_Pin|USR_BTN_1_Pin;
+  /*Configure GPIO pin : MotorFault_Pin */
+  GPIO_InitStruct.Pin = MotorFault_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(MotorFault_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : USR_BTN_3_Pin USR_BTN_2_Pin USR_BTN_1_Pin */
+  GPIO_InitStruct.Pin = USR_BTN_3_Pin|USR_BTN_2_Pin|USR_BTN_1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : USR_LED_3_Pin */

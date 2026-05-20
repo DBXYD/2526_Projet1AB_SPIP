@@ -21,7 +21,8 @@ void encoder_init(ENCODER * encoder, TIM_HandleTypeDef * htim_param, int tick_tr
 
 void encoder_update(ENCODER * encoder){
 	uint32_t current_cnt = encoder->htim->Instance->CNT;
+	encoder->htim->Instance->CNT=32768;
 	encoder->delta_ticks = current_cnt - encoder->last_cnt;
-	encoder->last_cnt = current_cnt;
+
 }
 

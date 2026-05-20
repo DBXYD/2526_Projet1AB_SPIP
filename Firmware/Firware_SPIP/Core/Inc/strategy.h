@@ -13,11 +13,12 @@
 typedef enum {
 	INIT,
 	MOVE_FORWARD_1,
+	WAIT_MOVE_FORWARD_1,
 	TURN_1,
+	WAIT_TURN_1,
 	MOVE_FORWARD_2,
-	TURN_2,
-	MOVE_FORWARD_3,
-	TURN_3,
+	WAIT_MOVE_FORWARD_2,
+	WAIT_TURN_2,
 	END
 } SEQUENCE;
 
@@ -26,7 +27,12 @@ typedef struct{
 }STATE;
 
 
-void yellow_one(STATE * status);
+void strat_one(STATE * status, const char * color);
+void strat_two(STATE * status, const char * color);
+void strat_three(STATE * status, const char * color);
+void strat_four(STATE * status, const char * color);
+void strat_five(STATE * status, const char * color);
+
 void status_init(STATE * status);
 
 #endif /* INC_STRATEGY_H_ */
