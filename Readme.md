@@ -99,12 +99,9 @@ flowchart TD
 
 Nous avons choisi le **STM32G431CBU6** comme microcontroleur principal du robot.
 
-Datasheets :
+Datasheet : [Datasheet officielle STMicroelectronics](https://www.st.com/resource/en/datasheet/stm32g431cb.pdf)
 
-- [Datasheet locale STM32G431CBU6](./Datasheets/STM32G431CBU6_Datasheet.pdf)
-- [Datasheet officielle STMicroelectronics](https://www.st.com/resource/en/datasheet/stm32g431cb.pdf)
-
-Ce composant a ete choisi car il correspond bien aux besoins du robot :
+Ce composant à été choisi car il correspond bien aux besoins du robot :
 
 - il fonctionne en logique **3.3 V**, ce qui est adapté à notre circuit ;
 - il dispose de nombreux GPIO pour connecter les capteurs, boutons, LEDs et signaux moteurs ;
@@ -118,10 +115,7 @@ Dans notre projet, le STM32 sert donc de centre de decision. Il lit les capteurs
 
 Pour piloter les deux moteurs DC, nous avons utilise un **DRV8411APWPR**.
 
-Datasheets :
-
-- [Datasheet locale DRV8411](./Datasheets/Driver_DATASHEET.pdf)
-- [Datasheet Texas Instruments DRV8411](https://www.ti.com/lit/ds/symlink/drv8411.pdf)
+Datasheets : [Datasheet Texas Instruments DRV8411](https://www.ti.com/lit/ds/symlink/drv8411.pdf)
 
 Le STM32 ne peut pas alimenter directement les moteurs, car ses broches ne fournissent pas assez de courant. Le DRV8411 joue donc le role d'interface de puissance entre le microcontroleur et les moteurs.
 
@@ -170,11 +164,7 @@ Cela permet de faire un asservissement et d'obtenir des deplacements plus préci
 
 Le robot utilise un **Dynamixel XL-320** comme actionneur pour une partie mobile, notamment la queue.
 
-Datasheets :
-
-- [Datasheet locale XL-320](./Datasheets/XL-320.pdf)
-- [Documentation locale Dynamixel XL-320](./Datasheets/dynamixel_xl-320.pdf)
-- [Documentation ROBOTIS officielle](https://emanual.robotis.com/docs/en/dxl/x/xl320/)
+Datasheet : [Documentation ROBOTIS officielle](https://emanual.robotis.com/docs/en/dxl/x/xl320/)
 
 Nous avons choisi le XL-320 car c'est un servomoteur intelligent. Contrairement a un servo simple, il integre déjà :
 
@@ -196,10 +186,7 @@ Dans le `.ioc`, la broche `PC4` est configuree en `USART1` half-duplex pour comm
 
 Le capteur ultrason est utilisé pour détecter les obstacles devant le robot.
 
-Datasheets :
-
-- [Datasheet locale HC-SR04](./Datasheets/HC-SR04.pdf)
-- [Datasheet HC-SR04 via DigiKey](https://www.digikey.com/en/htmldatasheets/production/3822706/0/0/1/hc-sr04.html)
+Datasheets : [Datasheet HC-SR04 via DigiKey](https://www.digikey.com/en/htmldatasheets/production/3822706/0/0/1/hc-sr04.html)
 
 Nous l'avons ajouté pour que le robot puisse s'arrêter lorsqu'un objet ou un autre robot se trouve trop près. Le principe est simple :
 
@@ -232,21 +219,258 @@ Dans KiCad, le connecteur `J5` relie le module infrarouge au STM32 :
 
 Nous avons choisi un suiveur de ligne a plusieurs sorties car il donne plus d'information qu'un seul capteur. Avec quatre signaux, le robot peut savoir si la ligne est :
 
-- centree ;
-- decalee a gauche ;
-- decalee a droite ;
-- perdue ou detectee partiellement.
+- centrée ;
+- decalée à gauche (légèrement ou fortement);
+- decalée à droite (légèrement ou fortement);
+- perdue ou detectée partiellement.
 
-Dans le firmware, les valeurs des quatre capteurs sont combinees dans une variable `position`. Cette position est ensuite utilisee dans `move_update` pour corriger la vitesse des roues.
+Dans le firmware, les valeurs des quatre capteurs sont combinées dans une variable `position`. Cette position est ensuite utilisée dans `move_update` pour corriger la vitesse des roues.
 
 ### 3.7 Regulateur AZ1117-3.3
 
-Le regulateur **AZ1117-3.3** permet de creer le rail d'alimentation 3.3 V a partir de l'alimentation principale.
+Le régulateur **AZ1117-3.3** permet de creer le rail d'alimentation 3.3 V à partir de l'alimentation principale.
 
-Datasheet :
+Datasheet : [Datasheet officielle AZ1117](https://www.diodes.com/assets/Datasheets/AZ1117.pdf)
 
-- [Datasheet officielle AZ1117](https://www.diodes.com/assets/Datasheets/AZ1117.pdf)
+Nous l'avons ajouté car le STM32 et plusieurs signaux logiques doivent etre alimentés en 3.3 V, alors que la partie puissance du robot fonctionne avec une tension plus elevée, notamment le rail +6 V.
 
-Nous l'avons ajoute car le STM32 et plusieurs signaux logiques doivent etre alimentes en 3.3 V, alors que la partie puissance du robot fonctionne avec une tension plus elevee, notamment le rail +6 V.
+Dans KiCad, le regulateur est accompagné de condensateurs de decouplage et de stabilisation. Ces condensateurs servent à limiter les variations de tension et à rendre l'alimentation plus stable.
 
-Dans KiCad, le regulateur est accompagne de condensateurs de decouplage et de stabilisation. Ces condensateurs servent a limiter les variations de tension et a rendre l'alimentation plus stable.
+### 3.8 Condensateurs de découplage
+
+Le schéma KiCad contient plusieurs condensateurs :
+
+- `100nF` près des circuits intégrés ;
+- `1uF`, `10uF` et `22uF` pour stabiliser les rails d'alimentation ;
+- des condensateurs autour du driver moteur et du régulateur.
+
+Datasheets :
+
+- [Wurth 100 nF 885012205085](https://www.we-online.com/components/products/datasheet/885012205085.pdf)
+- [Wurth 10 nF 885012205067](https://www.we-online.com/components/products/datasheet/885012205067.pdf)
+- [Wurth 1 uF 885012206076](https://www.we-online.com/components/products/datasheet/885012206076.pdf)
+- [Wurth 22 uF 885012107019](https://www.we-online.com/components/products/datasheet/885012107019.pdf)
+
+Ces condensateurs sont nécessaires car les moteurs et les circuits numériques peuvent créer des variations rapides de courant. Sans découplage, ces variations pourraient provoquer des resets du microcontroleur ou des comportements instables.
+
+### 3.9 Résistances
+
+Le PCB utilise plusieurs resistances :
+
+- resistances de tirage pour les boutons ;
+- resistances en serie avec les LEDs ;
+- resistances liees au driver moteur ;
+- resistance de `BOOT0` ;
+- resistances de valeurs particulieres comme `82k5`.
+
+Datasheets :
+
+- [Yageo RC0805 general purpose](https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L_12.pdf)
+- [RS Pro 1 kOhm](https://docs.rs-online.com/21eb/0900766b8157cb45.pdf)
+
+Les resistances de LEDs sont dimensionnees pour limiter le courant. Les annotations du schema indiquent les tensions directes des LEDs, par exemple `1.7V @ 1mA`, `2.3V @ 1mA` ou `2.6V @ 1mA`. Le but est d'avoir des voyants visibles sans consommer trop de courant ni endommager les LEDs.
+
+### 3.10 LEDs utilisateur
+
+Le PCB contient plusieurs LEDs, reliées à des signaux comme :
+
+- `LEDR` ;
+- `LEDG` ;
+- `LEDB`.
+
+Datasheets :
+
+- [LED rouge Wurth 150060RS55040](https://www.we-online.com/components/products/datasheet/150060RS55040.pdf)
+- [LED verte Wurth 150060GS55040](https://www.we-online.com/components/products/datasheet/150060GS55040.pdf)
+- [LED bleue Wurth 150060BS55040](https://www.we-online.com/components/products/datasheet/150060BS55040.pdf)
+
+Nous les avons ajoutées pour faciliter les tests. Elles peuvent indiquer un état du robot, un mode de fonctionnement, une erreur ou une étape de stratégie.
+
+### 3.11 Boutons utilisateur
+
+Le PCB contient plusieurs boutons, associés aux signaux :
+
+- `Button1` ;
+- `Button2` ;
+- `Button3`.
+
+Ils permettent de déclencher manuellement des actions, de changer d'état ou de lancer une séquence de test. Dans le `.ioc`, ces boutons sont configurés en interruptions externes, ce qui permet au STM32 de réagir immédiatement a un appui.
+
+
+### 3.12 Connecteur de programmation STDC14
+
+Le connecteur `J2` est un connecteur **STDC14**. Il sert a programmer et déboguer le STM32 avec un ST-Link.
+
+Documentation :
+
+- [Documentation STDC14 / STLINK-V3](https://www.st.com/content/ccc/resource/technical/document/user_manual/group1/99/49/91/b6/b2/3a/46/e5/DM00526767/files/DM00526767.pdf/jcr:content/translations/en.DM00526767.pdf)
+
+Il relie notamment :
+
+- `SWDIO` ;
+- `SWCLK` ;
+- `NRST` ;
+- `STLINK_TX` ;
+- `STLINK_RX` ;
+- `3.3V` ;
+- `GND`.
+
+Nous l'avons mis pour pouvoir flasher le programme, deboguer le code et utiliser une liaison UART avec l'ordinateur.
+
+## 4. Explication du projet KiCad
+
+Le projet KiCad se trouve dans :
+
+- [Schema KiCad](./Hardware/Kicad_SPIP/Kicad_SPIP.kicad_sch)
+- [PCB KiCad](./Hardware/Kicad_SPIP/Kicad_SPIP.kicad_pcb)
+
+Le schéma est organisé en blocs fonctionnels :
+
+- alimentation générale ;
+- STM32G431CBU6 ;
+- driver + moteurs ;
+- servo XL-320 ;
+- ultrason ;
+- infrarouge ;
+- boutons ;
+- LEDs ;
+- programmateur ;
+- trous de fixation.
+
+Cette organisation permet de comprendre rapidement le rôle de chaque partie.
+
+### 4.1 Bloc alimentation
+
+Le bloc alimentation sépare deux niveaux de tension :
+
+- `+6V` pour les éléments de puissance, comme les moteurs et le XL-320 ;
+- `+3.3V` pour le STM32 et les signaux logiques.
+
+Le régulateur transforme la tension principale en 3.3 V. Des condensateurs sont placés autour des rails d'alimentation pour éviter les chutes de tension lors des appels de courant.
+
+### 4.2 Bloc STM32
+
+Le STM32 est au centre du schéma. Les pins sont nommées selon leur rôle logiciel :
+
+- `PA0-US_TRIG` ;
+- `PA1-US_ECHO_INT` ;
+- `PA4-X1_INT` a `PA7-X4_INT` ;
+- `PC4-UART_XL320` ;
+- `PB10-MotorFault` ;
+- `PB4/PB5` pour l'encodeur du moteur A ;
+- `PB6/PB7` pour l'encodeur du moteur B ;
+- `PA15/PB3/PA9/PA10` pour les PWM moteur ;
+- `PA13/PA14` pour le debug SWD.
+
+Le fait de nommer les signaux directement dans KiCad rend le schéma plus lisible et facilite la correspondance avec le fichier `.ioc`.
+
+### 4.3 Bloc driver moteur
+
+Le bloc moteur contient le DRV8411 et les connecteurs moteurs. Le STM32 envoie des signaux PWM au driver, et le driver fournit le courant aux moteurs.
+
+Nous avons séparé la partie commande et la partie puissance :
+
+- le STM32 commande avec des signaux logiques ;
+- le driver gère le courant moteur ;
+- les encodeurs renvoient l'information de mouvement au STM32.
+
+Cette séparation est indispensable, car elle protège le microcontroleur et permet un pilotage plus précis.
+
+### 4.4 Bloc capteurs
+
+Le bloc capteurs regroupe l'ultrason et les capteurs infrarouges.
+
+L'ultrason est utilisé pour l'évitement d'obstacles. Les capteurs infrarouges servent à suivre une ligne ou à detecter un décalage lateral.
+
+Dans le PCB, ces capteurs sont connectés par des JST. Cela permet de démonter ou remplacer facilement un capteur sans ressouder la carte.
+
+### 4.5 Bloc interface utilisateur
+
+Les boutons et les LEDs permettent de tester le robot sans avoir besoin de modifier le code à chaque fois. Les boutons peuvent lancer des actions, et les LEDs peuvent afficher l'état du robot.
+
+Ce bloc est utile pendant les phases de debug, car il donne un retour visuel immédiat.
+
+### 4.6 Routage du PCB
+
+Dans le PCB, les composants principaux sont placés de manière à limiter les longueurs de pistes :
+
+- le STM32 est proche des signaux logiques ;
+- le driver moteur est proche des connecteurs moteurs ;
+- les connecteurs capteurs sont en bord de carte pour faciliter le cablage ;
+- les trous de fixation permettent une integration propre dans le chassis.
+
+Les rails `GND`, `+3.3V` et `+6V` sont clairement séparés dans les nets KiCad. Cela permet de distinguer la puissance moteur de la logique microcontroleur.
+
+## 5. Configuration STM32CubeIDE et fichier `.ioc`
+
+Le fichier de configuration est :
+
+- [Firware_SPIP.ioc](./Firmware/Firware_SPIP/Firware_SPIP.ioc)
+
+Ce fichier relie la conception electronique au code embarqué. Il indique quel pin du microcontroleur correspond à chaque fonction.
+
+### 5.1 Horloge
+
+Le STM32 est configuré avec une fréquence système de **170 MHz**. Cette frequence permet d'avoir assez de precision pour :
+
+- les PWM moteurs ;
+- la mesure ultrason ;
+- les timers d'interruption ;
+- l'asservissement.
+
+### 5.2 TIM2 pour les PWM moteurs
+
+Le timer `TIM2` est utilisé avec quatre canaux PWM :
+
+- `TIM2_CH1` : `MotorA_PWM_Forward` ;
+- `TIM2_CH2` : `MotorA_PWM_Reverse` ;
+- `TIM2_CH3` : `MotorB_PWM_Forward` ;
+- `TIM2_CH4` : `MotorB_PWM_Reverse`.
+
+Ce choix permet de gérer le sens et la vitesse des deux moteurs. Chaque moteur à deux commandes, une pour le sens avant et une pour le sens arrière.
+
+### 5.3 TIM3 et TIM4 pour les encodeurs
+
+Les timers `TIM3` et `TIM4` sont configurés en mode encodeur :
+
+- `TIM3` lit l'encodeur du moteur A ;
+- `TIM4` lit l'encodeur du moteur B.
+
+Le mode encodeur permet au microcontroleur de compter automatiquement les impulsions A/B des encodeurs, ce qui donne une mesure fiable du mouvement.
+
+### 5.4 TIM1 pour l'ultrason
+
+Le timer `TIM1` est utilisé pour mesurer la durée du signal `ECHO` du capteur ultrason. Son prescaler permet d'obtenir une base de temps adaptée a la mesure en microsecondes.
+
+Cette mesure est ensuite convertie en distance.
+
+### 5.5 TIM6 comme ordonnanceur periodique
+
+Le timer `TIM6` déclenche regulierement une interruption. Dans cette interruption, le programme :
+
+- déclenche l'ultrason ;
+- met à jour le suiveur de ligne ;
+- met à jour les encodeurs ;
+- met à jour l'asservissement ;
+- met à jour le mouvement ;
+- remet periodiquement à zero l'erreur cumulée du correcteur.
+
+Cela permet de faire fonctionner plusieurs sous-systemes en parallèle.
+
+### 5.6 USART1 pour le XL-320
+
+`USART1` est configuré en half-duplex sur `PC4`. Cela correspond au fonctionnement du XL-320, qui utilise une seule ligne de données pour envoyer et recevoir.
+
+### 5.7 USART2 pour le ST-Link
+
+`USART2` utilise `PA2` et `PA3`. Cette liaison peut servir au debug avec le ST-Link, par exemple pour afficher des informations sur un terminal serie.
+
+### 5.8 Interruptions externes
+
+Plusieurs pins sont configurées en interruptions :
+
+- `US_ECHO_INT` pour détecter les fronts du signal ultrason ;
+- `MotorFault` pour détecter un problème driver ;
+- les boutons utilisateur.
+
+Les interruptions permettent de reagir rapidement à des évenèments sans attendre la boucle principale.
