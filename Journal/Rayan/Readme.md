@@ -55,4 +55,8 @@ La fonction principale modifiée est `move_update`. Cette fonction est appelée 
 
 J’ai ajouté un nouveau paramètre à cette fonction afin qu’elle puisse recevoir les informations du suiveur de ligne.
 
+## Rédaction du rapport 
+
+Enfin, j'ai pris en charge la rédaction du rapport global du projet. Ce rapport explique l'ensemble du travail réalisé par le groupe, les choix techniques effectués, le rôle des composants utilisés, les liens vers les datasheets, ainsi que l'explication du schéma KiCad, du PCB, du fichier .ioc et du code embarqué. L'objectif était de produire un document complet permettant de comprendre ce qui à été fait dans le projet et pourquoi chaque choix à été realisé.
+
 
