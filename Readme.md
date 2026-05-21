@@ -474,3 +474,185 @@ Plusieurs pins sont configurées en interruptions :
 - les boutons utilisateur.
 
 Les interruptions permettent de reagir rapidement à des évenèments sans attendre la boucle principale.
+
+## 6. Explication du firmware
+
+Le code embarqué se trouve dans :
+
+- [Core/Src](./Firmware/Firware_SPIP/Core/Src)
+- [Core/Inc](./Firmware/Firware_SPIP/Core/Inc)
+
+Le firmware est séparé en modules. Chaque module gère une partie précise du robot.
+
+### 6.1 `motor.c` et `motor.h`
+
+Le module moteur gère le PWM applique aux moteurs. Il transforme une consigne de vitesse finale en rapport cyclique PWM.
+
+Nous avons séparé ce module car le pilotage bas niveau des moteurs doit être indépendant de la stratégie. La stratégie dit au robot quoi faire, tandis que `motor.c` applique physiquement la puissance aux moteurs.
+
+### 6.2 `encoder.c` et `encoder.h`
+
+Le module encodeur lit les compteurs des timers en mode encodeur. Il calcule les variations de ticks entre deux appels.
+
+Ces ticks sont essentiels pour connaitre le mouvement réel. Sans encodeur, le robot pourrait dériver à cause des différences entre les moteurs, du frottement ou de la batterie.
+
+### 6.3 `control.c` et `control.h`
+
+Le module d'asservissement compare la vitesse demandée avec la vitesse mesurée par les encodeurs.
+
+Le code calcule une erreur :
+
+```c
+error = control->ref_speed - 1000 * encoder->delta_ticks;
+```
+
+Puis il applique une correction proportionnelle et integrale :
+
+```c
+motor->speed_final = control->ref_speed
+                   + (control->Kp * error)
+                   + (control->Ki * control->error_cumul);
+```
+
+Nous avons utilisé ce principe car les deux moteurs ne tournent jamais exactement pareil. L'asservissement permet de corriger les écarts et d'obtenir un mouvement plus régulier.
+
+### 6.4 `move.c` et `move.h`
+
+Le module mouvement gère les ordres de haut niveau :
+
+- avancer d'une certaine distance ;
+- tourner d'un certain angle ;
+- s'arreter ;
+- adapter la vitesse en fonction du suiveur de ligne ;
+- s'arreter en cas d'obstacle ultrason.
+
+La fonction `move_forward` convertit une distance en centimetres en ticks encodeur. Pour cela, on utilise le périmetre de la roue :
+
+```c
+float perimeter_cm = 2.0f * M_PI * move->radius;
+float K = encoder->cnt_tr / perimeter_cm;
+move->d_target_cnt = d_target_cm * K;
+```
+
+Cette conversion permet de donner des ordres simples en centimetres tout en utilisant les encodeurs en interne.
+
+
+### 6.5 Correction par suiveur de ligne
+
+Nous avons ajout" une correction de trajectoire dans `move_update`. Le principe est de lire la position donnée par le suiveur de ligne infrarouge et d'adapter les vitesses des deux roues.
+
+Si la ligne est detectée a gauche, on ralentit la roue gauche et on accelère la roue droite. Si la ligne est détectée a droite, on fait l'inverse. Quand la ligne revient au centre, on remet la vitesse initiale.
+
+
+Cette partie a ete ajoutée car le robot ne roule pas toujours parfaitement droit. Les petites differences mécaniques entre les moteurs ou les roues peuvent créer une dérive. Le suiveur infrarouge permet donc de corriger cette dérive en temps réel.
+
+### 6.6 `Line_Follower.c` et `Line_Follower.h`
+
+Le module suiveur de ligne lit les quatre entrees infrarouges :
+
+```c
+lf->position = lf->sensor_values[0] * 1000
+             + lf->sensor_values[1] * 100
+             + lf->sensor_values[2] * 10
+             + lf->sensor_values[3];
+```
+
+Cette methode permet de transformer quatre lectures digitales en une seule valeur facile à comparer. Par exemple :
+
+- `0110` devient `110`, consideré comme centre ;
+- `1000` indique une detection a gauche ;
+- `0001` indique une detection a droite.
+
+### 6.7 `Ultrasound.c` et `Ultrasound.h`
+
+Le module ultrason gère le capteur HC-SR04. Il déclenche le capteur, mesure le temps du signal echo et calcule la distance.
+
+Dans `move_update`, la sécurite obstacle est prioritaire :
+
+```c
+if (us_sensor->distance_cm > 0.0f && us_sensor->distance_cm < 10.0f) {
+    control_set_speed(control_left, 0);
+    control_set_speed(control_right, 0);
+    return;
+}
+```
+
+Nous avons fait cela pour que le robot s'arrete immediatement si un obstacle est trop proche.
+
+### 6.8 `xl320.c` et `xl320.h`
+
+Le module XL-320 initialise et commande le servomoteur Dynamixel.
+
+Dans `main.c`, le XL-320 est initialisé avec l'UART puis configure :
+
+```c
+XL320_Init(&huart1);
+XL320_Config_LowPower(254);
+XL320_SetSpeed(254, 300);
+```
+
+L'identifiant `254` correspond a un broadcast, ce qui permet d'envoyer une commande a tous les servos connectes.
+
+### 6.9 `strategy.c` et `strategy.h`
+
+Le module strategie definit une suite d'actions. Par exemple, la strategie `yellow_one` enchaine :
+
+- une phase d'initialisation ;
+- un premier déplacement en ligne droite ;
+- un virage ;
+- un second déplacement ;
+- une fin de sequence.
+
+
+Nous avons choisi une machine à états car elle permet de décrire clairement la séquence de match. Chaque état correspond à une action précise, et le robot passe à l'état suivant lorsque l'action est terminée.
+
+### 6.10 `main.c`
+
+Le fichier `main.c` initialise tous les modules :
+
+- capteur ultrason ;
+- suiveur de ligne ;
+- moteurs ;
+- encodeurs ;
+- mouvement ;
+- asservissement ;
+- strategie ;
+- XL-320.
+
+La boucle principale appelle la strategie et le mouvement de la queue :
+
+```c
+while (1)
+{
+    yellow_one(&status);
+    move_tail(&status_tail);
+}
+```
+
+Les mises a jour rapides sont faites dans l'interruption de `TIM6`, ce qui permet de garder un comportement régulier.
+
+## 7. Résumé 
+
+Nous avons séparé le code en modules pour rendre le projet plus lisible et plus facile à tester.
+
+Chaque fichier à une responsabilité :
+
+- `motor` pilote le PWM ;
+- `encoder` lit les ticks ;
+- `control` fait l'asservissement ;
+- `move` gere les distances et les rotations ;
+- `Line_Follower` lit les capteurs IR ;
+- `Ultrasound` mesure les distances ;
+- `xl320` commande le servomoteur ;
+- `strategy` decide les actions ;
+- `main` initialise et orchestre le systeme.
+
+Ce decoupage évite d'avoir tout le code dans un seul fichier et facilite les corrections.
+
+## 8. Conclusion
+
+Le projet SPIP combine une partie électronique, une partie mécanique et une partie logicielle. La carte KiCad à été concue pour centraliser les connexions du robot autour du STM32G431CBU6. Le choix des composants repond aux besoins principaux : puissance moteur, mesure de position, détection d'obstacle, suivi de ligne, communication avec le servomoteur et debug.
+
+Le firmware transforme cette architecture matérielle en comportement autonome. Les encodeurs permettent de mesurer le mouvement, l'asservissement corrige les erreurs de vitesse, le suiveur infrarouge corrige la trajectoire, l'ultrason évite les obstacles, et la stratégie enchaine les actions du robot.
+
+L'ensemble du travail permet d'obtenir une base de robot autonome capable de se deplacer, se corriger, réagir a son environnement et exécuter une séquence de match.
