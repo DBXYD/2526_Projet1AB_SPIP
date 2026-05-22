@@ -80,19 +80,76 @@ L'architecture generale est la suivante :
 
 ```mermaid
 flowchart TD
-    Batterie["+6 V batterie"] --> Regulateur["Regulateur 3.3 V"]
-    Batterie --> Driver["DRV8411 - Driver moteurs"]
-    Batterie --> XL320["Dynamixel XL-320"]
-    Regulateur --> STM32["STM32G431CBU6"]
-    Regulateur --> Capteurs["Capteurs IR / ultrason / boutons / LEDs"]
-    STM32 --> Driver
-    Driver --> Moteurs["2 moteurs DC"]
-    Moteurs --> Encodeurs["Encodeurs"]
-    Encodeurs --> STM32
-    Capteurs --> STM32
-    STM32 --> XL320
-    STLINK["Connecteur STDC14 / ST-Link"] --> STM32
+    Batterie["+6 V batterie"] -->|Alimentation puissance +6 V| Driver["DRV8411<br/>Driver moteurs"]
+    Batterie -->|Alimentation puissance +6 V| XL320["Dynamixel XL-320<br/>Actionneur"]
+    Batterie -->|Entrée alimentation| Regulateur["Régulateur AZ1117<br/>3.3 V"]
+
+    Regulateur -->|Alimentation logique 3.3 V| STM32["STM32G431CBU6<br/>Microcontrôleur"]
+    Regulateur -->|Alimentation capteurs 3.3 V| Capteurs["Capteurs<br/>IR / ultrason / boutons / LEDs"]
+
+    STM32 -->|Commandes PWM<br/>AIN1, AIN2, BIN1, BIN2| Driver
+    Driver -->|Puissance moteur<br/>AOUT / BOUT| Moteurs["2 moteurs DC"]
+
+    Moteurs -->|Rotation mesurée| Encodeurs["Encodeurs moteurs"]
+    Encodeurs -->|Retour position / vitesse<br/>signaux A et B| STM32
+
+    Capteurs -->|Informations terrain<br/>ligne, obstacle, boutons| STM32
+    STM32 -->|UART half-duplex<br/>DATA| XL320
+
+    STLINK["Connecteur STDC14<br/>ST-Link"] -->|Programmation / debug<br/>SWDIO, SWCLK, UART| STM32
+
+    classDef power fill:#fff3cd,stroke:#f59f00,stroke-width:2px,color:#111;
+    classDef logic fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#111;
+    classDef command fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#111;
+    classDef sensor fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#111;
+    classDef debug fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#111;
+
+    class Batterie,Regulateur power;
+    class STM32 logic;
+    class Driver,Moteurs command;
+    class Encodeurs,Capteurs sensor;
+    class XL320,STLINK debug;
+
+    linkStyle 0 stroke:#f59f00,stroke-width:2px;
+    linkStyle 1 stroke:#f59f00,stroke-width:2px;
+    linkStyle 2 stroke:#f59f00,stroke-width:2px;
+    linkStyle 3 stroke:#2563eb,stroke-width:2px;
+    linkStyle 4 stroke:#2563eb,stroke-width:2px;
+    linkStyle 5 stroke:#dc2626,stroke-width:2px;
+    linkStyle 6 stroke:#dc2626,stroke-width:2px;
+    linkStyle 7 stroke:#16a34a,stroke-width:2px;
+    linkStyle 8 stroke:#16a34a,stroke-width:2px;
+    linkStyle 9 stroke:#16a34a,stroke-width:2px;
+    linkStyle 10 stroke:#9333ea,stroke-width:2px;
+    linkStyle 11 stroke:#9333ea,stroke-width:2px;
 ```
+
+**Légende des liens :**
+
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+
+<div style="background-color: #fff3cd; border-left: 6px solid #f59f00; padding: 8px;">
+<strong>Orange</strong> : alimentation puissance <code>+6 V</code>.
+</div>
+
+<div style="background-color: #dbeafe; border-left: 6px solid #2563eb; padding: 8px;">
+<strong>Bleu</strong> : alimentation logique <code>3.3 V</code>.
+</div>
+
+<div style="background-color: #fee2e2; border-left: 6px solid #dc2626; padding: 8px;">
+<strong>Rouge</strong> : commande moteur et puissance moteur.
+</div>
+
+<div style="background-color: #dcfce7; border-left: 6px solid #16a34a; padding: 8px;">
+<strong>Vert</strong> : retours capteurs et encodeurs vers le STM32.
+</div>
+
+<div style="background-color: #f3e8ff; border-left: 6px solid #9333ea; padding: 8px;">
+<strong>Violet</strong> : programmation, debug et communication série.
+</div>
+
+</div>
+
 ## 3. Choix des composants
 
 ### 3.1 Microcontroleur STM32G431CBU6
