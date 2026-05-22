@@ -13,6 +13,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "Ultrasound.h"
+#include "Line_Follower.h"
 
 typedef enum {STOP,MOVE_FORWARD,TURN,PAUSE} STATUS;
 
@@ -26,6 +27,8 @@ typedef struct{
     float radius;
     float angle_target_rad;
     float angle_actual_rad;
+    int32_t previous_speed_cnt;
+    uint8_t line_speed_adjusted;
 } MOVE;
 
 
@@ -33,6 +36,6 @@ typedef struct{
 void move_init(MOVE * move,ENCODER *encoder,float track_width,float radius);
 void move_forward(MOVE *move,ENCODER *encoder,float d_target_cm, float speed_cm_s);
 void turn(MOVE *move, ENCODER *encoder,float angle_target_rad, float speed_cm_s);
-void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCODER *encoder_left, ENCODER *encoder_right,US_SENSOR* us_sensor);
+void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCODER *encoder_left, ENCODER *encoder_right,US_SENSOR* us_sensor, LineFollower *line_follower);
 
 #endif

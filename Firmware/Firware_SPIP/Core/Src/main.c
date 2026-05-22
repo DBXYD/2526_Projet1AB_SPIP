@@ -245,7 +245,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	    encoder_update(&encoder_right);
 		control_update(&control_left,&motor_left, &encoder_left);
 		control_update(&control_right,&motor_right, &encoder_right);
-		move_update(&move, &control_left,&control_right, &encoder_left, &encoder_right,&us_sensor);
+		move_update(&move, &control_left,&control_right, &encoder_left, &encoder_right,&us_sensor, &h_lineFollower);
 		if (reset == 40){
 			error_reset(&control_left);
 			error_reset(&control_right);
