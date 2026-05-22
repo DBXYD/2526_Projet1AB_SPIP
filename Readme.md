@@ -54,29 +54,29 @@ Voici l'organisation principale du projet :
 
 ## 1. Introduction
 
-Le projet SPIP consiste a concevoir un robot PAMI pour la Coupe de France de Robotique. Le robot doit être autonome, compact, capable de se déplacer de manière controlée, d'intéragir avec le terrain, d'éviter les obstacles et de réaliser des actions simples pendant le match.
+Le projet SPIP consiste à concevoir un robot PAMI pour la Coupe de France de Robotique. Le robot doit être autonome, compact, capable de se déplacer de manière contrôlée, d'interagir avec le terrain, d'éviter les obstacles et de réaliser des actions simples pendant le match.
 
-Notre travail a donc porte sur trois grands axes :
+Notre travail a donc porté sur trois grands axes :
 
-- le choix et l'integration des composants;
-- la conception electronique du robot avec KiCad;
-- le developpement du firmware embarque sur STM32.
+- le choix et l'intégration des composants ;
+- la conception électronique du robot avec KiCad ;
+- le développement du firmware embarqué sur STM32.
 
-Le robot est organisé autour d'une carte électronique principale. Cette carte relie le microcontroleur, les moteurs, les encodeurs, les capteurs, les boutons, les LEDs, le connecteur de programmation et l'actionneur XL-320.
+Le robot est organisé autour d'une carte électronique principale. Cette carte relie le microcontrôleur, les moteurs, les encodeurs, les capteurs, les boutons, les LEDs, le connecteur de programmation et l'actionneur XL-320.
 
 ## 2. Objectif global du robot
 
-Le robot doit pouvoir se deplacer de facon autonome sur l'aire de jeu de la Coupe de France de Robotique. Pour cela, nous avons besoin :
+Le robot doit pouvoir se déplacer de façon autonome sur l'aire de jeu de la Coupe de France de Robotique. Pour cela, nous avons besoin :
 
-- d'un cerveau capable de piloter tous les peripheriques ;
+- d'un cerveau capable de piloter tous les périphériques ;
 - de deux moteurs ;
-- d'encodeurs pour connaitre le deplacement réel ;
+- d'encodeurs pour connaître le déplacement réel ;
 - d'un capteur ultrason pour détecter les obstacles ;
 - d'un suiveur de ligne infrarouge pour corriger la trajectoire ;
 - d'un servomoteur XL-320 pour actionner une partie mobile ;
-- d'une carte electronique pour relier tous les élements.
+- d'une carte électronique pour relier tous les éléments.
 
-L'architecture generale est la suivante :
+L'architecture générale est la suivante :
 
 ```mermaid
 flowchart TD
@@ -152,51 +152,51 @@ flowchart TD
 
 ## 3. Choix des composants
 
-### 3.1 Microcontroleur STM32G431CBU6
+### 3.1 Microcontrôleur STM32G431CBU6
 
-Nous avons choisi le **STM32G431CBU6** comme microcontroleur principal du robot.
+Nous avons choisi le **STM32G431CBU6** comme microcontrôleur principal du robot.
 
 Datasheet : [Datasheet officielle STMicroelectronics](https://www.st.com/resource/en/datasheet/stm32g431cb.pdf)
 
-Ce composant à été choisi car il correspond bien aux besoins du robot :
+Ce composant a été choisi car il correspond bien aux besoins du robot :
 
 - il fonctionne en logique **3.3 V**, ce qui est adapté à notre circuit ;
 - il dispose de nombreux GPIO pour connecter les capteurs, boutons, LEDs et signaux moteurs ;
 - il intègre plusieurs timers, indispensables pour générer des signaux PWM et lire les encodeurs ;
 - il possède des interfaces UART, utiles pour communiquer avec le XL-320 et avec le ST-Link ;
-- son coeur ARM Cortex-M4 a 170 MHz offre assez de puissance pour faire tourner l'asservissement, la strategie et les capteurs en parallele.
+- son cœur ARM Cortex-M4 à 170 MHz offre assez de puissance pour faire tourner l'asservissement, la stratégie et les capteurs en parallèle.
 
-Dans notre projet, le STM32 sert donc de centre de decision. Il lit les capteurs, calcule les consignes de mouvement, pilote les moteurs et exécute la stratégie de match.
+Dans notre projet, le STM32 sert donc de centre de décision. Il lit les capteurs, calcule les consignes de mouvement, pilote les moteurs et exécute la stratégie de match.
 
 ### 3.2 Driver moteur DRV8411APWPR
 
-Pour piloter les deux moteurs DC, nous avons utilise un **DRV8411APWPR**.
+Pour piloter les deux moteurs DC, nous avons utilisé un **DRV8411APWPR**.
 
-Datasheets : [Datasheet Texas Instruments DRV8411](https://www.ti.com/lit/ds/symlink/drv8411.pdf)
+Datasheet : [Datasheet Texas Instruments DRV8411](https://www.ti.com/lit/ds/symlink/drv8411.pdf)
 
-Le STM32 ne peut pas alimenter directement les moteurs, car ses broches ne fournissent pas assez de courant. Le DRV8411 joue donc le role d'interface de puissance entre le microcontroleur et les moteurs.
+Le STM32 ne peut pas alimenter directement les moteurs, car ses broches ne fournissent pas assez de courant. Le DRV8411 joue donc le rôle d'interface de puissance entre le microcontrôleur et les moteurs.
 
 Nous l'avons choisi car :
 
 - il permet de piloter deux moteurs DC avec un seul circuit ;
 - il fonctionne avec des signaux logiques compatibles avec le STM32 ;
-- il accepte une alimentation moteur separée, ici le rail **+6 V** ;
-- il possède une sortie de defaut, notee `FAULT`, permettant au microcontroleur de détecter un probleme ;
+- il accepte une alimentation moteur séparée, ici le rail **+6 V** ;
+- il possède une sortie de défaut, notée `FAULT`, permettant au microcontrôleur de détecter un problème ;
 - il peut être commandé par des signaux PWM pour régler la vitesse.
 
-Dans le schema KiCad, les signaux importants sont :
+Dans le schéma KiCad, les signaux importants sont :
 
 - `AIN1` et `AIN2` pour le moteur A ;
 - `BIN1` et `BIN2` pour le moteur B ;
 - `AOUT1`, `AOUT2`, `BOUT1`, `BOUT2` vers les connecteurs moteurs ;
 - `FAULT` vers le STM32 ;
-- `AIPROPI` et `BIPROPI` avec des resistances pour la partie mesure/protection du driver.
+- `AIPROPI` et `BIPROPI` avec des résistances pour la partie mesure/protection du driver.
 
 ### 3.3 Moteurs DC avec encodeurs
 
 Le robot utilise deux moteurs DC avec encodeurs intégrés.
 
-Dans le schema KiCad, les connecteurs moteurs sont des connecteurs JST 6 broches :
+Dans le schéma KiCad, les connecteurs moteurs sont des connecteurs JST 6 broches :
 
 - `J6` pour un moteur ;
 - `J7` pour l'autre moteur.
@@ -208,14 +208,14 @@ Chaque connecteur transporte :
 - la masse ;
 - les deux signaux encodeur A et B.
 
-Nous avons choisi des moteurs avec encodeurs car un simple moteur DC ne permet pas de connaitre la distance réelle parcourue. Avec les encodeurs, le STM32 peut compter les impulsions et en déduire :
+Nous avons choisi des moteurs avec encodeurs car un simple moteur DC ne permet pas de connaître la distance réelle parcourue. Avec les encodeurs, le STM32 peut compter les impulsions et en déduire :
 
 - la distance parcourue ;
 - la vitesse réelle ;
 - le sens de rotation ;
-- l'erreur entre la consigne et le mouvement reel.
+- l'erreur entre la consigne et le mouvement réel.
 
-Cela permet de faire un asservissement et d'obtenir des deplacements plus précis.
+Cela permet de faire un asservissement et d'obtenir des déplacements plus précis.
 
 ### 3.4 Servomoteur Dynamixel XL-320
 
@@ -223,47 +223,47 @@ Le robot utilise un **Dynamixel XL-320** comme actionneur pour une partie mobile
 
 Datasheet : [Documentation ROBOTIS officielle](https://emanual.robotis.com/docs/en/dxl/x/xl320/)
 
-Nous avons choisi le XL-320 car c'est un servomoteur intelligent. Contrairement a un servo simple, il integre déjà :
+Nous avons choisi le XL-320 car c'est un servomoteur intelligent. Contrairement à un servo simple, il intègre déjà :
 
 - un moteur ;
 - un contrôleur ;
-- une electronique de puissance ;
+- une électronique de puissance ;
 - un protocole de communication ;
 - un retour d'état.
 
-Il se commande avec une liaison serie half-duplex. Dans KiCad, il est relie par le connecteur `J3`, avec :
+Il se commande avec une liaison série half-duplex. Dans KiCad, il est relié par le connecteur `J3`, avec :
 
 - `+6V` pour l'alimentation ;
 - `GND` ;
 - `DATA` pour la communication.
 
-Dans le `.ioc`, la broche `PC4` est configuree en `USART1` half-duplex pour communiquer avec le XL-320.
+Dans le `.ioc`, la broche `PC4` est configurée en `USART1` half-duplex pour communiquer avec le XL-320.
 
 ### 3.5 Capteur ultrason HC-SR04
 
 Le capteur ultrason est utilisé pour détecter les obstacles devant le robot.
 
-Datasheets : [Datasheet HC-SR04 via DigiKey](https://www.digikey.com/en/htmldatasheets/production/3822706/0/0/1/hc-sr04.html)
+Datasheet : [Datasheet HC-SR04 via DigiKey](https://www.digikey.com/en/htmldatasheets/production/3822706/0/0/1/hc-sr04.html)
 
 Nous l'avons ajouté pour que le robot puisse s'arrêter lorsqu'un objet ou un autre robot se trouve trop près. Le principe est simple :
 
 - le STM32 envoie une impulsion sur `TRIG` ;
 - le capteur émet une onde ultrasonore ;
-- le signal `ECHO` reste actif pendant une duree proportionnelle a la distance ;
-- le STM32 mesure cette duree et calcule la distance.
+- le signal `ECHO` reste actif pendant une durée proportionnelle à la distance ;
+- le STM32 mesure cette durée et calcule la distance.
 
-Dans KiCad, le capteur est relie au connecteur `J4` :
+Dans KiCad, le capteur est relié au connecteur `J4` :
 
 - `+3.3V` ;
 - `TRIGG` ;
 - `ECHO` ;
 - `GND`.
 
-Dans le code, si la distance mesuree est inferieure a 10 cm, le robot met les deux vitesses moteur a zero. Cela permet d'eviter une collision.
+Dans le code, si la distance mesurée est inférieure à 10 cm, le robot met les deux vitesses moteur à zéro. Cela permet d'éviter une collision.
 
 ### 3.6 Suiveur de ligne infrarouge
 
-Le suiveur de ligne infrarouge est utilise pour detecter la position du robot par rapport a une ligne au sol.
+Le suiveur de ligne infrarouge est utilisé pour détecter la position du robot par rapport à une ligne au sol.
 
 Dans KiCad, le connecteur `J5` relie le module infrarouge au STM32 :
 
@@ -274,24 +274,24 @@ Dans KiCad, le connecteur `J5` relie le module infrarouge au STM32 :
 - `X4` ;
 - `GND`.
 
-Nous avons choisi un suiveur de ligne a plusieurs sorties car il donne plus d'information qu'un seul capteur. Avec quatre signaux, le robot peut savoir si la ligne est :
+Nous avons choisi un suiveur de ligne à plusieurs sorties car il donne plus d'information qu'un seul capteur. Avec quatre signaux, le robot peut savoir si la ligne est :
 
 - centrée ;
-- decalée à gauche (légèrement ou fortement);
-- decalée à droite (légèrement ou fortement);
-- perdue ou detectée partiellement.
+- décalée à gauche, légèrement ou fortement ;
+- décalée à droite, légèrement ou fortement ;
+- perdue ou détectée partiellement.
 
-Dans le firmware, les valeurs des quatre capteurs sont combinées dans une variable `position`. Cette position est ensuite utilisée dans `move_update` pour corriger la vitesse des roues.
+Dans le firmware, les valeurs des quatre capteurs sont combinées dans une variable `position`. Cette position peut ensuite être utilisée pour corriger la trajectoire du robot.
 
-### 3.7 Regulateur AZ1117-3.3
+### 3.7 Régulateur AZ1117-3.3
 
-Le régulateur **AZ1117-3.3** permet de creer le rail d'alimentation 3.3 V à partir de l'alimentation principale.
+Le régulateur **AZ1117-3.3** permet de créer le rail d'alimentation 3.3 V à partir de l'alimentation principale.
 
 Datasheet : [Datasheet officielle AZ1117](https://www.diodes.com/assets/Datasheets/AZ1117.pdf)
 
-Nous l'avons ajouté car le STM32 et plusieurs signaux logiques doivent etre alimentés en 3.3 V, alors que la partie puissance du robot fonctionne avec une tension plus elevée, notamment le rail +6 V.
+Nous l'avons ajouté car le STM32 et plusieurs signaux logiques doivent être alimentés en 3.3 V, alors que la partie puissance du robot fonctionne avec une tension plus élevée, notamment le rail +6 V.
 
-Dans KiCad, le regulateur est accompagné de condensateurs de decouplage et de stabilisation. Ces condensateurs servent à limiter les variations de tension et à rendre l'alimentation plus stable.
+Dans KiCad, le régulateur est accompagné de condensateurs de découplage et de stabilisation. Ces condensateurs servent à limiter les variations de tension et à rendre l'alimentation plus stable.
 
 ### 3.8 Condensateurs de découplage
 
@@ -308,24 +308,24 @@ Datasheets :
 - [Wurth 1 uF 885012206076](https://www.we-online.com/components/products/datasheet/885012206076.pdf)
 - [Wurth 22 uF 885012107019](https://www.we-online.com/components/products/datasheet/885012107019.pdf)
 
-Ces condensateurs sont nécessaires car les moteurs et les circuits numériques peuvent créer des variations rapides de courant. Sans découplage, ces variations pourraient provoquer des resets du microcontroleur ou des comportements instables.
+Ces condensateurs sont nécessaires car les moteurs et les circuits numériques peuvent créer des variations rapides de courant. Sans découplage, ces variations pourraient provoquer des resets du microcontrôleur ou des comportements instables.
 
 ### 3.9 Résistances
 
-Le PCB utilise plusieurs resistances :
+Le PCB utilise plusieurs résistances :
 
-- resistances de tirage pour les boutons ;
-- resistances en serie avec les LEDs ;
-- resistances liees au driver moteur ;
-- resistance de `BOOT0` ;
-- resistances de valeurs particulieres comme `82k5`.
+- résistances de tirage pour les boutons ;
+- résistances en série avec les LEDs ;
+- résistances liées au driver moteur ;
+- résistance de `BOOT0` ;
+- résistances de valeurs particulières comme `82k5`.
 
 Datasheets :
 
 - [Yageo RC0805 general purpose](https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L_12.pdf)
 - [RS Pro 1 kOhm](https://docs.rs-online.com/21eb/0900766b8157cb45.pdf)
 
-Les resistances de LEDs sont dimensionnees pour limiter le courant. Les annotations du schema indiquent les tensions directes des LEDs, par exemple `1.7V @ 1mA`, `2.3V @ 1mA` ou `2.6V @ 1mA`. Le but est d'avoir des voyants visibles sans consommer trop de courant ni endommager les LEDs.
+Les résistances de LEDs sont dimensionnées pour limiter le courant. Les annotations du schéma indiquent les tensions directes des LEDs, par exemple `1.7V @ 1mA`, `2.3V @ 1mA` ou `2.6V @ 1mA`. Le but est d'avoir des voyants visibles sans consommer trop de courant ni endommager les LEDs.
 
 ### 3.10 LEDs utilisateur
 
@@ -351,12 +351,11 @@ Le PCB contient plusieurs boutons, associés aux signaux :
 - `Button2` ;
 - `Button3`.
 
-Ils permettent de déclencher manuellement des actions, de changer d'état ou de lancer une séquence de test. Dans le `.ioc`, ces boutons sont configurés en interruptions externes, ce qui permet au STM32 de réagir immédiatement a un appui.
-
+Ils permettent de déclencher manuellement des actions, de changer d'état ou de lancer une séquence de test. Dans le `.ioc`, ces boutons sont configurés en interruptions externes, ce qui permet au STM32 de réagir immédiatement à un appui.
 
 ### 3.12 Connecteur de programmation STDC14
 
-Le connecteur `J2` est un connecteur **STDC14**. Il sert a programmer et déboguer le STM32 avec un ST-Link.
+Le connecteur `J2` est un connecteur **STDC14**. Il sert à programmer et déboguer le STM32 avec un ST-Link.
 
 Documentation :
 
@@ -372,13 +371,13 @@ Il relie notamment :
 - `3.3V` ;
 - `GND`.
 
-Nous l'avons mis pour pouvoir flasher le programme, deboguer le code et utiliser une liaison UART avec l'ordinateur.
+Nous l'avons mis pour pouvoir flasher le programme, déboguer le code et utiliser une liaison UART avec l'ordinateur.
 
 ## 4. Explication du projet KiCad
 
 Le projet KiCad se trouve dans :
 
-- [Schema KiCad](./Hardware/Kicad_SPIP/Kicad_SPIP.kicad_sch)
+- [Schéma KiCad](./Hardware/Kicad_SPIP/Kicad_SPIP.kicad_sch)
 - [PCB KiCad](./Hardware/Kicad_SPIP/Kicad_SPIP.kicad_pcb)
 
 Le schéma est organisé en blocs fonctionnels :
@@ -411,7 +410,7 @@ Le STM32 est au centre du schéma. Les pins sont nommées selon leur rôle logic
 
 - `PA0-US_TRIG` ;
 - `PA1-US_ECHO_INT` ;
-- `PA4-X1_INT` a `PA7-X4_INT` ;
+- `PA4-X1_INT` à `PA7-X4_INT` ;
 - `PC4-UART_XL320` ;
 - `PB10-MotorFault` ;
 - `PB4/PB5` pour l'encodeur du moteur A ;
@@ -431,13 +430,13 @@ Nous avons séparé la partie commande et la partie puissance :
 - le driver gère le courant moteur ;
 - les encodeurs renvoient l'information de mouvement au STM32.
 
-Cette séparation est indispensable, car elle protège le microcontroleur et permet un pilotage plus précis.
+Cette séparation est indispensable, car elle protège le microcontrôleur et permet un pilotage plus précis.
 
 ### 4.4 Bloc capteurs
 
 Le bloc capteurs regroupe l'ultrason et les capteurs infrarouges.
 
-L'ultrason est utilisé pour l'évitement d'obstacles. Les capteurs infrarouges servent à suivre une ligne ou à detecter un décalage lateral.
+L'ultrason est utilisé pour l'évitement d'obstacles. Les capteurs infrarouges servent à suivre une ligne ou à détecter un décalage latéral.
 
 Dans le PCB, ces capteurs sont connectés par des JST. Cela permet de démonter ou remplacer facilement un capteur sans ressouder la carte.
 
@@ -453,10 +452,10 @@ Dans le PCB, les composants principaux sont placés de manière à limiter les l
 
 - le STM32 est proche des signaux logiques ;
 - le driver moteur est proche des connecteurs moteurs ;
-- les connecteurs capteurs sont en bord de carte pour faciliter le cablage ;
-- les trous de fixation permettent une integration propre dans le chassis.
+- les connecteurs capteurs sont en bord de carte pour faciliter le câblage ;
+- les trous de fixation permettent une intégration propre dans le châssis.
 
-Les rails `GND`, `+3.3V` et `+6V` sont clairement séparés dans les nets KiCad. Cela permet de distinguer la puissance moteur de la logique microcontroleur.
+Les rails `GND`, `+3.3V` et `+6V` sont clairement séparés dans les nets KiCad. Cela permet de distinguer la puissance moteur de la logique microcontrôleur.
 
 ## 5. Configuration STM32CubeIDE et fichier `.ioc`
 
@@ -464,11 +463,11 @@ Le fichier de configuration est :
 
 - [Firware_SPIP.ioc](./Firmware/Firware_SPIP/Firware_SPIP.ioc)
 
-Ce fichier relie la conception electronique au code embarqué. Il indique quel pin du microcontroleur correspond à chaque fonction.
+Ce fichier relie la conception électronique au code embarqué. Il indique quel pin du microcontrôleur correspond à chaque fonction.
 
 ### 5.1 Horloge
 
-Le STM32 est configuré avec une fréquence système de **170 MHz**. Cette frequence permet d'avoir assez de precision pour :
+Le STM32 est configuré avec une fréquence système de **170 MHz**. Cette fréquence permet d'avoir assez de précision pour :
 
 - les PWM moteurs ;
 - la mesure ultrason ;
@@ -484,7 +483,7 @@ Le timer `TIM2` est utilisé avec quatre canaux PWM :
 - `TIM2_CH3` : `MotorB_PWM_Forward` ;
 - `TIM2_CH4` : `MotorB_PWM_Reverse`.
 
-Ce choix permet de gérer le sens et la vitesse des deux moteurs. Chaque moteur à deux commandes, une pour le sens avant et une pour le sens arrière.
+Ce choix permet de gérer le sens et la vitesse des deux moteurs. Chaque moteur a deux commandes, une pour le sens avant et une pour le sens arrière.
 
 ### 5.3 TIM3 et TIM4 pour les encodeurs
 
@@ -493,26 +492,26 @@ Les timers `TIM3` et `TIM4` sont configurés en mode encodeur :
 - `TIM3` lit l'encodeur du moteur A ;
 - `TIM4` lit l'encodeur du moteur B.
 
-Le mode encodeur permet au microcontroleur de compter automatiquement les impulsions A/B des encodeurs, ce qui donne une mesure fiable du mouvement.
+Le mode encodeur permet au microcontrôleur de compter automatiquement les impulsions A/B des encodeurs, ce qui donne une mesure fiable du mouvement.
 
 ### 5.4 TIM1 pour l'ultrason
 
-Le timer `TIM1` est utilisé pour mesurer la durée du signal `ECHO` du capteur ultrason. Son prescaler permet d'obtenir une base de temps adaptée a la mesure en microsecondes.
+Le timer `TIM1` est utilisé pour mesurer la durée du signal `ECHO` du capteur ultrason. Son prescaler permet d'obtenir une base de temps adaptée à la mesure en microsecondes.
 
 Cette mesure est ensuite convertie en distance.
 
-### 5.5 TIM6 comme ordonnanceur periodique
+### 5.5 TIM6 comme ordonnanceur périodique
 
-Le timer `TIM6` déclenche regulierement une interruption. Dans cette interruption, le programme :
+Le timer `TIM6` déclenche régulièrement une interruption. Dans cette interruption, le programme :
 
 - déclenche l'ultrason ;
 - met à jour le suiveur de ligne ;
 - met à jour les encodeurs ;
 - met à jour l'asservissement ;
 - met à jour le mouvement ;
-- remet periodiquement à zero l'erreur cumulée du correcteur.
+- remet périodiquement à zéro l'erreur cumulée du correcteur.
 
-Cela permet de faire fonctionner plusieurs sous-systemes en parallèle.
+Cela permet de faire fonctionner plusieurs sous-systèmes en parallèle.
 
 ### 5.6 USART1 pour le XL-320
 
@@ -520,7 +519,7 @@ Cela permet de faire fonctionner plusieurs sous-systemes en parallèle.
 
 ### 5.7 USART2 pour le ST-Link
 
-`USART2` utilise `PA2` et `PA3`. Cette liaison peut servir au debug avec le ST-Link, par exemple pour afficher des informations sur un terminal serie.
+`USART2` utilise `PA2` et `PA3`. Cette liaison peut servir au debug avec le ST-Link, par exemple pour afficher des informations sur un terminal série.
 
 ### 5.8 Interruptions externes
 
@@ -530,7 +529,7 @@ Plusieurs pins sont configurées en interruptions :
 - `MotorFault` pour détecter un problème driver ;
 - les boutons utilisateur.
 
-Les interruptions permettent de reagir rapidement à des évenèments sans attendre la boucle principale.
+Les interruptions permettent de réagir rapidement à des événements sans attendre la boucle principale.
 
 ## 6. Explication du firmware
 
@@ -543,7 +542,7 @@ Le firmware est séparé en modules. Chaque module gère une partie précise du 
 
 ### 6.1 `motor.c` et `motor.h`
 
-Le module moteur gère le PWM applique aux moteurs. Il transforme une consigne de vitesse finale en rapport cyclique PWM.
+Le module moteur gère le PWM appliqué aux moteurs. Il transforme une consigne de vitesse finale en rapport cyclique PWM.
 
 Nous avons séparé ce module car le pilotage bas niveau des moteurs doit être indépendant de la stratégie. La stratégie dit au robot quoi faire, tandis que `motor.c` applique physiquement la puissance aux moteurs.
 
@@ -551,7 +550,7 @@ Nous avons séparé ce module car le pilotage bas niveau des moteurs doit être 
 
 Le module encodeur lit les compteurs des timers en mode encodeur. Il calcule les variations de ticks entre deux appels.
 
-Ces ticks sont essentiels pour connaitre le mouvement réel. Sans encodeur, le robot pourrait dériver à cause des différences entre les moteurs, du frottement ou de la batterie.
+Ces ticks sont essentiels pour connaître le mouvement réel. Sans encodeur, le robot pourrait dériver à cause des différences entre les moteurs, du frottement ou de la batterie.
 
 ### 6.3 `control.c` et `control.h`
 
@@ -563,7 +562,7 @@ Le code calcule une erreur :
 error = control->ref_speed - 1000 * encoder->delta_ticks;
 ```
 
-Puis il applique une correction proportionnelle et integrale :
+Puis il applique une correction proportionnelle et intégrale :
 
 ```c
 motor->speed_final = control->ref_speed
@@ -579,11 +578,10 @@ Le module mouvement gère les ordres de haut niveau :
 
 - avancer d'une certaine distance ;
 - tourner d'un certain angle ;
-- s'arreter ;
-- adapter la vitesse en fonction du suiveur de ligne ;
-- s'arreter en cas d'obstacle ultrason.
+- s'arrêter ;
+- s'arrêter en cas d'obstacle ultrason.
 
-La fonction `move_forward` convertit une distance en centimetres en ticks encodeur. Pour cela, on utilise le périmetre de la roue :
+La fonction `move_forward` convertit une distance en centimètres en ticks encodeur. Pour cela, on utilise le périmètre de la roue :
 
 ```c
 float perimeter_cm = 2.0f * M_PI * move->radius;
@@ -591,21 +589,19 @@ float K = encoder->cnt_tr / perimeter_cm;
 move->d_target_cnt = d_target_cm * K;
 ```
 
-Cette conversion permet de donner des ordres simples en centimetres tout en utilisant les encodeurs en interne.
+Cette conversion permet de donner des ordres simples en centimètres tout en utilisant les encodeurs en interne.
 
+### 6.5 Suiveur de ligne
 
-### 6.5 Correction par suiveur de ligne
+Le suiveur de ligne est bien lu régulièrement dans l'interruption du timer grâce à `LF_Update(&h_lineFollower)`. Cette fonction met à jour la position détectée par les quatre capteurs infrarouges.
 
-Nous avons ajout" une correction de trajectoire dans `move_update`. Le principe est de lire la position donnée par le suiveur de ligne infrarouge et d'adapter les vitesses des deux roues.
+Cependant, dans la version actuelle du code, cette information n'est pas encore utilisée directement dans `move_update`. La fonction `move_update` gère pour l'instant l'avancement, les virages, l'arrêt à la distance cible et l'arrêt de sécurité avec le capteur ultrason.
 
-Si la ligne est detectée a gauche, on ralentit la roue gauche et on accelère la roue droite. Si la ligne est détectée a droite, on fait l'inverse. Quand la ligne revient au centre, on remet la vitesse initiale.
-
-
-Cette partie a ete ajoutée car le robot ne roule pas toujours parfaitement droit. Les petites differences mécaniques entre les moteurs ou les roues peuvent créer une dérive. Le suiveur infrarouge permet donc de corriger cette dérive en temps réel.
+L'objectif prévu avec le suiveur infrarouge est d'utiliser la position détectée pour corriger la trajectoire du robot. Si la ligne est détectée à gauche, une correction de vitesse peut être appliquée aux moteurs pour recentrer le robot, et inversement si la ligne est détectée à droite.
 
 ### 6.6 `Line_Follower.c` et `Line_Follower.h`
 
-Le module suiveur de ligne lit les quatre entrees infrarouges :
+Le module suiveur de ligne lit les quatre entrées infrarouges :
 
 ```c
 lf->position = lf->sensor_values[0] * 1000
@@ -614,17 +610,17 @@ lf->position = lf->sensor_values[0] * 1000
              + lf->sensor_values[3];
 ```
 
-Cette methode permet de transformer quatre lectures digitales en une seule valeur facile à comparer. Par exemple :
+Cette méthode permet de transformer quatre lectures digitales en une seule valeur facile à comparer. Par exemple :
 
-- `0110` devient `110`, consideré comme centre ;
-- `1000` indique une detection a gauche ;
-- `0001` indique une detection a droite.
+- `0110` devient `110`, considéré comme centre ;
+- `1000` indique une détection à gauche ;
+- `0001` indique une détection à droite.
 
 ### 6.7 `Ultrasound.c` et `Ultrasound.h`
 
 Le module ultrason gère le capteur HC-SR04. Il déclenche le capteur, mesure le temps du signal echo et calcule la distance.
 
-Dans `move_update`, la sécurite obstacle est prioritaire :
+Dans `move_update`, la sécurité obstacle est prioritaire :
 
 ```c
 if (us_sensor->distance_cm > 0.0f && us_sensor->distance_cm < 10.0f) {
@@ -634,13 +630,13 @@ if (us_sensor->distance_cm > 0.0f && us_sensor->distance_cm < 10.0f) {
 }
 ```
 
-Nous avons fait cela pour que le robot s'arrete immediatement si un obstacle est trop proche.
+Nous avons fait cela pour que le robot s'arrête immédiatement si un obstacle est trop proche.
 
 ### 6.8 `xl320.c` et `xl320.h`
 
 Le module XL-320 initialise et commande le servomoteur Dynamixel.
 
-Dans `main.c`, le XL-320 est initialisé avec l'UART puis configure :
+Dans `main.c`, le XL-320 est initialisé avec l'UART puis configuré :
 
 ```c
 XL320_Init(&huart1);
@@ -648,20 +644,21 @@ XL320_Config_LowPower(254);
 XL320_SetSpeed(254, 300);
 ```
 
-L'identifiant `254` correspond a un broadcast, ce qui permet d'envoyer une commande a tous les servos connectes.
+L'identifiant `254` correspond à un broadcast, ce qui permet d'envoyer une commande à tous les servos connectés.
 
 ### 6.9 `strategy.c` et `strategy.h`
 
-Le module strategie definit une suite d'actions. Par exemple, la strategie `yellow_one` enchaine :
+Le module stratégie définit plusieurs séquences d'actions : `strat_one`, `strat_two`, `strat_three`, `strat_four` et `strat_five`.
 
-- une phase d'initialisation ;
-- un premier déplacement en ligne droite ;
-- un virage ;
-- un second déplacement ;
-- une fin de sequence.
+Chaque stratégie correspond à un enchaînement différent de déplacements. La fonction reçoit aussi une couleur, par exemple `"yellow"` ou `"blue"`, afin d'adapter le sens du virage selon le côté du terrain.
 
+La stratégie utilisée actuellement dans `main.c` est :
 
-Nous avons choisi une machine à états car elle permet de décrire clairement la séquence de match. Chaque état correspond à une action précise, et le robot passe à l'état suivant lorsque l'action est terminée.
+```c
+strat_two(&status, "yellow");
+```
+
+Nous avons choisi une machine à états car elle permet de décrire clairement la séquence de match. Chaque état correspond à une action précise : avancer, attendre la fin du déplacement, tourner, attendre la fin du virage, puis passer à l'action suivante.
 
 ### 6.10 `main.c`
 
@@ -673,43 +670,54 @@ Le fichier `main.c` initialise tous les modules :
 - encodeurs ;
 - mouvement ;
 - asservissement ;
-- strategie ;
+- stratégie ;
 - XL-320.
 
-La boucle principale appelle la strategie et le mouvement de la queue :
+Avant d'entrer dans la boucle principale, le programme utilise aussi une condition de départ liée au capteur ultrason :
+
+```c
+while (us_sensor.distance_cm < 10) {
+    US_Update(&us_sensor);
+    HAL_Delay(50);
+}
+```
+
+Cette partie joue le rôle de tirette ou de condition de départ : le robot attend que la distance mesurée soit suffisante avant de lancer sa stratégie.
+
+La boucle principale appelle actuellement la stratégie `strat_two` avec la couleur `"yellow"`, ainsi que le mouvement de la queue :
 
 ```c
 while (1)
 {
-    yellow_one(&status);
+    strat_two(&status, "yellow");
     move_tail(&status_tail);
 }
 ```
 
-Les mises a jour rapides sont faites dans l'interruption de `TIM6`, ce qui permet de garder un comportement régulier.
+La couleur passée à la fonction permet d'adapter le sens du virage selon le côté de départ du robot. Les mises à jour rapides sont faites dans l'interruption de `TIM6`, ce qui permet de garder un comportement régulier.
 
-## 7. Résumé 
+## 7. Résumé
 
 Nous avons séparé le code en modules pour rendre le projet plus lisible et plus facile à tester.
 
-Chaque fichier à une responsabilité :
+Chaque fichier a une responsabilité :
 
 - `motor` pilote le PWM ;
 - `encoder` lit les ticks ;
 - `control` fait l'asservissement ;
-- `move` gere les distances et les rotations ;
+- `move` gère les distances et les rotations ;
 - `Line_Follower` lit les capteurs IR ;
 - `Ultrasound` mesure les distances ;
 - `xl320` commande le servomoteur ;
-- `strategy` decide les actions ;
-- `main` initialise et orchestre le systeme.
+- `strategy` décide les actions ;
+- `main` initialise et orchestre le système.
 
-Ce decoupage évite d'avoir tout le code dans un seul fichier et facilite les corrections.
+Ce découpage évite d'avoir tout le code dans un seul fichier et facilite les corrections.
 
 ## 8. Conclusion
 
-Le projet SPIP combine une partie électronique, une partie mécanique et une partie logicielle. La carte KiCad à été concue pour centraliser les connexions du robot autour du STM32G431CBU6. Le choix des composants repond aux besoins principaux : puissance moteur, mesure de position, détection d'obstacle, suivi de ligne, communication avec le servomoteur et debug.
+Le projet SPIP combine une partie électronique, une partie mécanique et une partie logicielle. La carte KiCad a été conçue pour centraliser les connexions du robot autour du STM32G431CBU6. Le choix des composants répond aux besoins principaux : puissance moteur, mesure de position, détection d'obstacle, suivi de ligne, communication avec le servomoteur et debug.
 
-Le firmware transforme cette architecture matérielle en comportement autonome. Les encodeurs permettent de mesurer le mouvement, l'asservissement corrige les erreurs de vitesse, le suiveur infrarouge corrige la trajectoire, l'ultrason évite les obstacles, et la stratégie enchaine les actions du robot.
+Le firmware transforme cette architecture matérielle en comportement autonome. Les encodeurs permettent de mesurer le mouvement, l'asservissement corrige les erreurs de vitesse, le suiveur infrarouge prépare la correction de trajectoire, l'ultrason évite les obstacles, et la stratégie enchaîne les actions du robot.
 
-L'ensemble du travail permet d'obtenir une base de robot autonome capable de se deplacer, se corriger, réagir a son environnement et exécuter une séquence de match.
+L'ensemble du travail permet d'obtenir une base de robot autonome capable de se déplacer, se corriger, réagir à son environnement et exécuter une séquence de match.
