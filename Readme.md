@@ -152,7 +152,7 @@ flowchart TD
 
 ## 3. Choix des composants
 
-> **Note de conception :** Pour consulter l'inventaire complet du matériel et le détail des calculs de dimensionnement (calculs de puissance, choix des tailles de boîtiers CMS, etc.), reportez-vous au [Document de Conception Détaillée de Lucas](./Hardware/details.md).
+> **Note de conception :** Pour consulter l'inventaire complet du matériel et le détail des calculs de dimensionnement (calculs de puissance, choix des tailles de boîtiers CMS, etc.), reportez-vous au [Document de détails](./Hardware/details.md).
 
 ### 3.1 Microcontrôleur STM32G431CBU6
 
