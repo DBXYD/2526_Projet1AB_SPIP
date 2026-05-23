@@ -621,13 +621,17 @@ move->d_target_cnt = d_target_cm * K;
 
 Cette conversion permet de donner des ordres simples en centimètres tout en utilisant les encodeurs en interne.
 
-### 6.5 Suiveur de ligne
+### 6.5 Correction par suiveur de ligne
 
-Le suiveur de ligne est bien lu régulièrement dans l'interruption du timer grâce à `LF_Update(&h_lineFollower)`. Cette fonction met à jour la position détectée par les quatre capteurs infrarouges.
+Le suiveur de ligne est lu régulièrement dans l'interruption du timer grâce à `LF_Update(&h_lineFollower)`. Cette fonction met à jour la position détectée par les quatre capteurs infrarouges.
 
-Cependant, dans la version actuelle du code, cette information n'est pas encore utilisée directement dans `move_update`. La fonction `move_update` gère pour l'instant l'avancement, les virages, l'arrêt à la distance cible et l'arrêt de sécurité avec le capteur ultrason.
+Cette position est ensuite transmise à `move_update` grâce à l'appel suivant dans `main.c` :
 
-L'objectif prévu avec le suiveur infrarouge est d'utiliser la position détectée pour corriger la trajectoire du robot. Si la ligne est détectée à gauche, une correction de vitesse peut être appliquée aux moteurs pour recentrer le robot, et inversement si la ligne est détectée à droite.
+```c
+move_update(&move, &control_left, &control_right,
+            &encoder_left, &encoder_right,
+            &us_sensor, &h_lineFollower);
+```
 
 ### 6.6 `Line_Follower.c` et `Line_Follower.h`
 
