@@ -152,6 +152,8 @@ flowchart TD
 
 ## 3. Choix des composants
 
+> **Note de conception :** Pour consulter l'inventaire complet du matériel et le détail des calculs de dimensionnement (calculs de puissance, choix des tailles de boîtiers CMS, etc.), reportez-vous au [Document de Conception Détaillée de Lucas](./Hardware/details.md).
+
 ### 3.1 Microcontrôleur STM32G431CBU6
 
 Nous avons choisi le **STM32G431CBU6** comme microcontrôleur principal du robot.
@@ -404,6 +406,9 @@ Le bloc alimentation sépare deux niveaux de tension :
 
 Le régulateur transforme la tension principale en 3.3 V. Des condensateurs sont placés autour des rails d'alimentation pour éviter les chutes de tension lors des appels de courant.
 
+![Schéma Alimentation](Hardware/Screen_couche/alimentation.png)
+![Schéma Abaisseur](Hardware/Screen_couche/abaisseur.png)
+
 ### 4.2 Bloc STM32
 
 Le STM32 est au centre du schéma. Les pins sont nommées selon leur rôle logiciel :
@@ -420,6 +425,8 @@ Le STM32 est au centre du schéma. Les pins sont nommées selon leur rôle logic
 
 Le fait de nommer les signaux directement dans KiCad rend le schéma plus lisible et facilite la correspondance avec le fichier `.ioc`.
 
+![Schéma STM32](Hardware/Screen_couche/stm32.png)
+
 ### 4.3 Bloc driver moteur
 
 Le bloc moteur contient le DRV8411 et les connecteurs moteurs. Le STM32 envoie des signaux PWM au driver, et le driver fournit le courant aux moteurs.
@@ -432,7 +439,25 @@ Nous avons séparé la partie commande et la partie puissance :
 
 Cette séparation est indispensable, car elle protège le microcontrôleur et permet un pilotage plus précis.
 
-### 4.4 Bloc capteurs
+![Schéma Driver Moteur](Hardware/Screen_couche/moteur.png)
+
+### 4.4 Bloc programmateur
+
+Le connecteur STDC14 sert à relier le ST-Link pour flasher le programme et déboguer le code. 
+
+Il permet d'accéder directement aux signaux de programmation `SWDIO` et `SWCLK`, ainsi qu'aux broches UART du STM32 pour envoyer des données vers l'ordinateur pendant les tests.
+
+![Schéma Programmateur](Hardware/Screen_couche/programateur.png)
+
+### 4.5 Bloc servomoteur intelligent
+
+Ce bloc contient le connecteur pour le servomoteur Dynamixel XL-320. 
+
+Le connecteur est relié au rail `+6V` pour la puissance et utilise la broche `PC4` configurée en UART half-duplex pour l'échange de données. Cette configuration permet de commander la position de l'actionneur avec un seul fil de signal.
+
+![Schéma Servo XL320](Hardware/Screen_couche/xl320.png)
+
+### 4.6 Bloc capteurs
 
 Le bloc capteurs regroupe l'ultrason et les capteurs infrarouges.
 
@@ -440,13 +465,19 @@ L'ultrason est utilisé pour l'évitement d'obstacles. Les capteurs infrarouges 
 
 Dans le PCB, ces capteurs sont connectés par des JST. Cela permet de démonter ou remplacer facilement un capteur sans ressouder la carte.
 
-### 4.5 Bloc interface utilisateur
+![Schéma Ultrason](Hardware/Screen_couche/ultrason.png)
+![Schéma Infrarouge](Hardware/Screen_couche/infrarouge.png)
+
+### 4.7 Bloc interface utilisateur
 
 Les boutons et les LEDs permettent de tester le robot sans avoir besoin de modifier le code à chaque fois. Les boutons peuvent lancer des actions, et les LEDs peuvent afficher l'état du robot.
 
 Ce bloc est utile pendant les phases de debug, car il donne un retour visuel immédiat.
 
-### 4.6 Routage du PCB
+![Schéma LED](Hardware/Screen_couche/led.png)
+![Schéma Bouton](Hardware/Screen_couche/button.png)
+
+### 4.8 Routage du PCB
 
 Dans le PCB, les composants principaux sont placés de manière à limiter les longueurs de pistes :
 
@@ -456,7 +487,6 @@ Dans le PCB, les composants principaux sont placés de manière à limiter les l
 - les trous de fixation permettent une intégration propre dans le châssis.
 
 Les rails `GND`, `+3.3V` et `+6V` sont clairement séparés dans les nets KiCad. Cela permet de distinguer la puissance moteur de la logique microcontrôleur.
-
 ## 5. Configuration STM32CubeIDE et fichier `.ioc`
 
 Le fichier de configuration est :
@@ -721,3 +751,8 @@ Le projet SPIP combine une partie électronique, une partie mécanique et une pa
 Le firmware transforme cette architecture matérielle en comportement autonome. Les encodeurs permettent de mesurer le mouvement, l'asservissement corrige les erreurs de vitesse, le suiveur infrarouge prépare la correction de trajectoire, l'ultrason évite les obstacles, et la stratégie enchaîne les actions du robot.
 
 L'ensemble du travail permet d'obtenir une base de robot autonome capable de se déplacer, se corriger, réagir à son environnement et exécuter une séquence de match.
+
+## 9. Demonstration
+
+Voici une vidéo de notre PAMI se dirigeaant vers un des gardes manger
+![Démonstration du PAMI SPIP](Strategie/TEST_PAMI.gif)

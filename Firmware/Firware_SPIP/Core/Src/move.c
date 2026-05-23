@@ -62,7 +62,6 @@ void move_update(MOVE *move, CONTROL *control_left, CONTROL *control_right, ENCO
 	}
 
 
-
 	if (move->status == STOP){
 	        control_set_speed(control_left, 0);
 	        control_set_speed(control_right, 0);

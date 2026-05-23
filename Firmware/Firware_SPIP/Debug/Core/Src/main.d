@@ -32,7 +32,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/gpio.h ../Core/Inc/Ultrasound.h ../Core/Inc/Line_Follower.h \
  ../Core/Inc/strategy.h ../Core/Inc/move.h ../Core/Inc/control.h \
  ../Core/Inc/motor.h ../Core/Inc/control.h ../Core/Inc/encoder.h \
- ../Core/Inc/Ultrasound.h ../Core/Inc/xl320.h
+ ../Core/Inc/Ultrasound.h ../Core/Inc/Line_Follower.h ../Core/Inc/xl320.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -76,4 +76,5 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/control.h:
 ../Core/Inc/encoder.h:
 ../Core/Inc/Ultrasound.h:
+../Core/Inc/Line_Follower.h:
 ../Core/Inc/xl320.h:

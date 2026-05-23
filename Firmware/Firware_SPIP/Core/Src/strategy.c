@@ -57,7 +57,7 @@ void strat_two(STATE * status, const char * color){
 			break;
 
 		case MOVE_FORWARD_1:
-			move_forward(&move, &encoder_left, 86.0, 20.0);
+			move_forward(&move, &encoder_left, 96.0, 20.0);
 			status->status_actual = WAIT_MOVE_FORWARD_1;
 			break;
 

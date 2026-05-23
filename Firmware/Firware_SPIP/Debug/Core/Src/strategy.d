@@ -29,7 +29,8 @@ Core/Src/strategy.o: ../Core/Src/strategy.c ../Core/Inc/strategy.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Core/Inc/control.h ../Core/Inc/encoder.h ../Core/Inc/Ultrasound.h
+ ../Core/Inc/control.h ../Core/Inc/encoder.h ../Core/Inc/Ultrasound.h \
+ ../Core/Inc/Line_Follower.h
 ../Core/Inc/strategy.h:
 ../Core/Inc/move.h:
 ../Core/Inc/control.h:
@@ -67,3 +68,4 @@ Core/Src/strategy.o: ../Core/Src/strategy.c ../Core/Inc/strategy.h \
 ../Core/Inc/control.h:
 ../Core/Inc/encoder.h:
 ../Core/Inc/Ultrasound.h:
+../Core/Inc/Line_Follower.h:
